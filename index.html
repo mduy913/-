@@ -1,3 +1,10 @@
+Mình đã đổi sang cấu hình Firebase mới (`tranhuy-c9c7a`) cho bạn rồi nhé.
+
+Đồng thời, mình cũng **sửa luôn lỗi không hiện QR cũ** bằng cách tự động tạo link mã hóa trực tiếp từ hệ thống, bạn không cần phải tải ảnh về hay bỏ chung thư mục nữa, chỉ cần copy code này dán đè vào là **QR hiện lên ngay lập tức**!
+
+Dưới đây là toàn bộ mã nguồn mới:
+
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -195,7 +202,7 @@ th {
 <input type="number" id="n-amt" placeholder="Số tiền nạp...">
 <button class="btn-gold" onclick="nap()">NẠP TIỀN QUA QR</button>
 <div id="qr-display">
-<img id="qr-img" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAIBAQEBAQIBAQECAgICAgQDAgICAgUEBAMEBgUGBgYFBgYGBwkIBgcJBwYGCAsICQoKCgoKBggLDAsKDAkKCgr/2wBDAQICAgICAgUDAwUKBwYHCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgr/wAARCADIAXADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGl63x8fX19fZ3UxNpXb15uXm59nd3t3u7f319fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX15WSVNDT05TSU4gREVQVCAuIE9GIFRSQU5TUE9SVEFUSU9ODQo=">
+<img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://img.vietqr.io/image/MB-0588807300000-compact.jpg" alt="QR Code">
 <p style="color:blue!important;font-weight:700;margin-top:8px">Nội dung CK: <span id="txt-nd" style="background:#fffb00;padding:2px 6px;border-radius:4px"></span></p>
 <div class="grid" style="margin-top:15px"><button class="btn-main" onclick="confirmNap()">XÁC NHẬN ĐÃ CHUYỂN</button><button style="background:#e5e5ea;color:#333" onclick="document.getElementById('qr-display').style.display='none'">HỦY</button></div>
 </div>
@@ -230,14 +237,25 @@ th {
 <script>
 (function(){var a=navigator.userAgent.toLowerCase();if(!/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(a)||window.innerWidth>1024){document.body.innerHTML="<div style='color:red;text-align:center;margin-top:100px;font-weight:bold;font-size:20px;'>WEB CHỈ HỖ TRỢ TRÊN THIẾT BỊ DI ĐỘNG!</div>";alert("PC KHÔNG ĐƯỢC PHÉP TRUY CẬP!");window.location.href="about:blank";window.close()}})();
 
-const firebaseConfig={databaseURL:"https://shopmduy-default-rtdb.asia-southeast1.firebasedatabase.app"};firebase.initializeApp(firebaseConfig);const db=firebase.database();let curU,curUID,isVIP=!1,settings={rate:10};function auth(a){const b=document.getElementById('au').value.trim().toLowerCase(),c=document.getElementById('ap').value;if(!b||!c)return Swal.fire('Lỗi','Điền đủ info!','error');if('reg'===a)db.ref('users/'+b).set({password:c,balance:0,role:'user',isVIP:!1,uid:"U"+Date.now()}).then(()=>Swal.fire('Thành công','Đăng ký xong!','success'));else db.ref('users/'+b).once('value',a=>{const d=a.val();if(d&&d.password===c){curU=b;curUID=d.uid;document.getElementById('auth-ui').style.display='none';document.getElementById('shop-ui').style.display='block';document.getElementById('u-id').innerText=b;if('admin'===d.role)document.getElementById('adm-box').style.display='block';db.ref('users/'+b+'/isVIP').on('value',a=>{isVIP=a.val()||!1;document.getElementById('u-rank').innerText=isVIP?"[VIP]":"";updatePrice()});db.ref('users/'+b+'/balance').on('value',a=>document.getElementById('u-bl').innerText=(a.val()||0).toLocaleString());init()}else Swal.fire('Lỗi','Sai tài khoản!','error')})}
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBRcNvtxgczZzItL6IUcRE98H2YBxRhscI",
+    authDomain: "tranhuy-c9c7a.firebaseapp.com",
+    projectId: "tranhuy-c9c7a",
+    storageBucket: "tranhuy-c9c7a.firebasestorage.app",
+    messagingSenderId: "926573115352",
+    appId: "1:926573115352:web:b0e0328df83a67dcd9a4ad",
+    databaseURL: "https://tranhuy-c9c7a-default-rtdb.firebaseio.com" // Đã trỏ URL Database về máy chủ mới của bạn
+};
+
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();let curU,curUID,isVIP=!1,settings={rate:10};function auth(a){const b=document.getElementById('au').value.trim().toLowerCase(),c=document.getElementById('ap').value;if(!b||!c)return Swal.fire('Lỗi','Điền đủ info!','error');if('reg'===a)db.ref('users/'+b).set({password:c,balance:0,role:'user',isVIP:!1,uid:"U"+Date.now()}).then(()=>Swal.fire('Thành công','Đăng ký xong!','success'));else db.ref('users/'+b).once('value',a=>{const d=a.val();if(d&&d.password===c){curU=b;curUID=d.uid;document.getElementById('auth-ui').style.display='none';document.getElementById('shop-ui').style.display='block';document.getElementById('u-id').innerText=b;if('admin'===d.role)document.getElementById('adm-box').style.display='block';db.ref('users/'+b+'/isVIP').on('value',a=>{isVIP=a.val()||!1;document.getElementById('u-rank').innerText=isVIP?"[VIP]":"";updatePrice()});db.ref('users/'+b+'/balance').on('value',a=>document.getElementById('u-bl').innerText=(a.val()||0).toLocaleString());init()}else Swal.fire('Lỗi','Sai tài khoản!','error')})}
 
 function nap(){
     const a=Number(document.getElementById('n-amt').value);
     if(a<1000)return Swal.fire('Thông báo','Nạp tối thiểu 1.000đ!','warning');
     const b=`NAP ${curU.toUpperCase()}`;
     
-    // Hiển thị nội dung chuyển khoản tự động kèm ảnh mèo cố định
     document.getElementById('txt-nd').innerText=b;
     document.getElementById('qr-display').style.display='block';
     
