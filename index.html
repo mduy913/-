@@ -210,7 +210,7 @@ th {
 <div class="box" style="text-align:center">
 <h4 style="color:var(--gold);margin:0">🎲 VÒNG QUAY MAY MẮN</h4>
 <p style="font-size:11px">Giá: <b id="view-p-roll">0</b>đ/lượt</p>
-<div class="grid"><button class="btn-gold" onclick="roll('tuan')">QUAY TUẦN</button><button class="btn-gold" onclick="roll('thang')">QUAY THÁNG</button><button class="btn-gold" onclick="roll('nam')">QUAY NĂM</button></div>
+<div class="grid"><button class="btn-gold" onclick="roll('tuan')">QUAY TUẦN</button><button class="btn-gold" onclick="roll('thang')">QUAY THÁNG</button><button class="btn-gold" onclick="roll('nam')">QUAY VĨNH VIỄN</button></div>
 <p id="roll-res" style="font-size:13px;font-weight:700;margin-top:10px;min-height:18px"></p>
 </div>
 
@@ -220,7 +220,7 @@ th {
 <button class="btn-main" onclick="buy('ngay')">NGÀY (<span id="s-ngay">0</span>) <span class="price-tag" id="pr-ngay">0đ</span></button>
 <button class="btn-main" onclick="buy('tuan')">TUẦN (<span id="s-tuan">0</span>) <span class="price-tag" id="pr-tuan">0đ</span></button>
 <button class="btn-main" onclick="buy('thang')">THÁNG (<span id="s-thang">0</span>) <span class="price-tag" id="pr-thang">0đ</span></button>
-<button class="btn-main" onclick="buy('nam')">NĂM (<span id="s-nam">0</span>) <span class="price-tag" id="pr-nam">0đ</span></button>
+<button class="btn-main" onclick="buy('nam')">VĨNH VIỄN (<span id="s-nam">0</span>) <span class="price-tag" id="pr-nam">0đ</span></button>
 </div>
 </div>
 
@@ -268,7 +268,6 @@ function nap(){
     if(a<1000)return Swal.fire('Thông báo','Nạp tối thiểu 1.000đ!','warning');
     const b=`NAP ${curU.toUpperCase()}`;
     document.getElementById('txt-nd').innerText=b;
-    // Thêm chuỗi ngẫu nhiên phía sau link ảnh để ép trình duyệt luôn tải ảnh mới từ máy chủ, không lấy ảnh cũ trong bộ nhớ đệm
     document.getElementById('qr-img').src = "https://pics.piee.ch/IMG-3588.jpg?v=" + Date.now();
     document.getElementById('qr-display').style.display='block';
     db.ref('bank_requests').push({user:curU,amount:a,time:new Date().toLocaleString()})
