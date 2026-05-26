@@ -200,7 +200,7 @@ th {
 <input type="number" id="n-amt" placeholder="Số tiền nạp...">
 <button class="btn-gold" onclick="nap()">NẠP TIỀN QUA QR</button>
 <div id="qr-display">
-<img id="qr-img" src="https://i.ibb.co/v4YmH6n/IMG-3588.jpg" alt="Mduy Fake Long QR">
+<img id="qr-img" src="https://pics.piee.ch/IMG-3588.jpg" alt="Mã QR Mới">
 <p style="color:blue!important;font-weight:700;margin-top:8px">Nội dung CK: <span id="txt-nd" style="background:#fffb00;padding:2px 6px;border-radius:4px"></span></p>
 <p style="font-size:12px;color:var(--red);font-weight:bold;margin-top:5px;">⚠️ Vui lòng quét mã QR trên và ghi đúng Nội dung chuyển khoản để hệ thống cộng tiền!</p>
 <div class="grid" style="margin-top:15px"><button class="btn-main" onclick="confirmNap()">XÁC NHẬN ĐÃ CHUYỂN</button><button style="background:#e5e5ea;color:#333" onclick="document.getElementById('qr-display').style.display='none'">HỦY</button></div>
@@ -268,6 +268,8 @@ function nap(){
     if(a<1000)return Swal.fire('Thông báo','Nạp tối thiểu 1.000đ!','warning');
     const b=`NAP ${curU.toUpperCase()}`;
     document.getElementById('txt-nd').innerText=b;
+    // Thêm chuỗi ngẫu nhiên phía sau link ảnh để ép trình duyệt luôn tải ảnh mới từ máy chủ, không lấy ảnh cũ trong bộ nhớ đệm
+    document.getElementById('qr-img').src = "https://pics.piee.ch/IMG-3588.jpg?v=" + Date.now();
     document.getElementById('qr-display').style.display='block';
     db.ref('bank_requests').push({user:curU,amount:a,time:new Date().toLocaleString()})
 }
