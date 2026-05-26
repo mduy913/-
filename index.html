@@ -1,10 +1,3 @@
-Mình đã đổi sang cấu hình Firebase mới (`tranhuy-c9c7a`) cho bạn rồi nhé.
-
-Đồng thời, mình cũng **sửa luôn lỗi không hiện QR cũ** bằng cách tự động tạo link mã hóa trực tiếp từ hệ thống, bạn không cần phải tải ảnh về hay bỏ chung thư mục nữa, chỉ cần copy code này dán đè vào là **QR hiện lên ngay lập tức**!
-
-Dưới đây là toàn bộ mã nguồn mới:
-
-```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -245,7 +238,8 @@ const firebaseConfig = {
     storageBucket: "tranhuy-c9c7a.firebasestorage.app",
     messagingSenderId: "926573115352",
     appId: "1:926573115352:web:b0e0328df83a67dcd9a4ad",
-    databaseURL: "https://tranhuy-c9c7a-default-rtdb.firebaseio.com" // Đã trỏ URL Database về máy chủ mới của bạn
+
+    databaseURL: "https://tranhuy-c9c7a-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
 firebase.initializeApp(firebaseConfig);
