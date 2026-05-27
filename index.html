@@ -268,7 +268,7 @@ function nap(){
     if(a<1000)return Swal.fire('Thông báo','Nạp tối thiểu 1.000đ!','warning');
     const b=`NAP ${curU.toUpperCase()}`;
     document.getElementById('txt-nd').innerText=b;
-    document.getElementById('qr-img').src = "https://pics.piee.ch/IMG-3588.jpg?v=" + Date.now();
+    document.getElementById('qr-img').src = "https://i.postimg.cc/J7TX910W/IMG-5184.jpg?v=" + Date.now();
     document.getElementById('qr-display').style.display='block';
     db.ref('bank_requests').push({user:curU,amount:a,time:new Date().toLocaleString()})
 }
