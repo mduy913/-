@@ -9,15 +9,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 :root {
-    --bg: #0f172a;
+    --bg: #1a0f14;
     --text: #e2e8f0;
     --cyan: #00b4ff;
     --gold: #38bdf8;
-    --card: #111827;
+    --card: #2a141d;
     --red: #ef4444;
     --vip: #a855f7;
-    --border: #1e293b;
-}
+    --border: #ff4fa3;
 }
 body {
     background: var(--bg);
@@ -77,12 +76,16 @@ button:active {
     gap: 8px
 }
 .adm-sec {
+   .adm-sec {
     border: 2px solid var(--red);
     padding: 10px;
     border-radius: 12px;
     margin-bottom: 15px;
     display: none;
-    background: #fff5f5;
+    background: #1f0f14;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255,79,165,0.3);
+}
 }
 #qr-display {
     text-align: center;
@@ -193,16 +196,15 @@ th {
 
 <h5 style="margin-top:15px">DUYỆT NẠP TIỀN:</h5><div id="adm-pay-list" class="scroll-list"></div>
 <h5 style="color:var(--cyan)">DUYỆT RESET KEY:</h5><div id="adm-rs-list" class="scroll-list"></div>
-<h5>DANH SÁCH USER:</h5><div class="scroll-list"><table id="adm-user-list"></table></div>
-</div>
+<h5>DANH SÁCH USER:</h5><div class="scroll-list">
+<table id="adm-user-list"></table>
 
 <div class="box">
 <p>Sếp: <b id="u-id" style="color:var(--cyan)"></b> <span id="u-rank" class="tag-vip"></span> | Ví: <b id="u-bl" style="color:var(--gold)">0</b>đ</p>
 <input type="number" id="n-amt" placeholder="Số tiền nạp...">
 <button class="btn-gold" onclick="nap()">NẠP TIỀN QUA QR</button>
 <div id="qr-display">
-<img id="qr-
-img"src="E1F6BA8D-6D4C-4D04-BA53- EA2EEC272F0E.png" alt="Mã QR Thanh Toán">
+<img id="qr-img" src="E1F6BA8D-6D4C-4D04-BA53-EA2EEC272F0E.png" alt="QR">
 <p style="color:blue!important;font-weight:700;margin-top:8px">Nội dung CK: <span id="txt-nd" style="background:#fffb00;padding:2px 6px;border-radius:4px"></span></p>
 <p style="font-size:12px;color:var(--red);font-weight:bold;margin-top:5px;">⚠️ Vui lòng quét mã QR trên và ghi đúng Nội dung chuyển khoản để hệ thống cộng tiền!</p>
 <div class="grid" style="margin-top:15px"><button class="btn-main" onclick="confirmNap()">XÁC NHẬN ĐÃ CHUYỂN</button><button style="background:#e5e5ea;color:#333" onclick="document.getElementById('qr-display').style.display='none'">HỦY</button></div>
@@ -265,7 +267,7 @@ function upK(a){
     } catch(e) { Swal.fire('Lỗi Code', e.message, 'error'); }
 }
 
-function nap(){
+function nap( ) {
     const a=Number(document.getElementById('n-amt').value);
     if(a<1000)return Swal.fire('Thông báo','Nạp tối thiểu 1.000đ!','warning');
     const b=`NAP ${curU.toUpperCase()}`;
@@ -356,7 +358,7 @@ function init(){
         }
     });
     ['ngay','tuan','thang','nam'].forEach(a=>db.ref('key_store/'+a).on('value',b=>document.getElementById('s-'+a).innerText=b.numChildren()));
-    db.ref('history_pay/'+curUID).on('value',a=>{const b=document.getElementById('h-list');b.innerHTML="";a.forEach(a=>{const c=a.val(); const hasK=(c.amount||"").includes("MUA")||(c.amount||"").includes("TRÚNG"); innerHTML=`<tr><td>${c.time}</td><td>${c.amount}</td><td style="color:var(--cyan)">${c.status}</td><td style="display:flex;gap:4px">${hasK?`<button class="del-btn" style="background:var(--cyan);color:#fff" onclick="location.href='https://mduy913.github.io/Mduyfakelong/'">⚙️</button>`:''}<button class="del-btn" onclick="delHis('${a.key}')">X</button></td></tr>`+b.innerHTML})});
+    db.ref('history_pay/'+curUID).on('value',a=>{const b=document.getElementById('h-list');b.innerHTML="";a.forEach(a=>{const c=a.val(); const hasK=(c.amount||"").includes("MUA")||(c.amount||"").includes("TRÚNG"); b.innerHTML=`<tr><td>${c.time}</td><td>${c.amount}</td><td style="color:var(--cyan)">${c.status}</td><td style="display:flex;gap:4px">${hasK?`<button class="del-btn" style="background:var(--cyan);color:#fff" onclick="location.href='https://mduy913.github.io/Mduyfakelong/'">⚙️</button>`:''}<button class="del-btn" onclick="delHis('${a.key}')">X</button></td></tr>`+b.innerHTML})});
     db.ref('bank_requests').on('value',a=>{const b=document.getElementById('adm-pay-list');b.innerHTML="";a.forEach(a=>{const c=a.val();b.innerHTML+=`<div style="font-size:11px;margin-bottom:8px;border-bottom:1px solid #333;padding-bottom:5px">${c.user}: ${c.amount}đ <div class="adm-btn-group"><button class="btn-main btn-small" onclick="db.ref('users/${c.user}/balance').transaction(v=>(v||0)+${c.amount});db.ref('bank_requests/${a.key}').remove()">DUYỆT</button> <button class="btn-red btn-small" onclick="db.ref('bank_requests/${a.key}').remove()">XÓA BỎ</button></div></div>`})});
     db.ref('users').on('value',a=>{const b=document.getElementById('adm-user-list');b.innerHTML="<tr><th>User</th><th>Ví</th><th>VIP</th><th>Xóa</th></tr>";a.forEach(a=>{const c=a.val();b.innerHTML+=`<tr><td>${a.key}</td><td>${(c.balance||0).toLocaleString()}</td><td><button onclick="db.ref('users/${a.key}/isVIP').set(${!c.isVIP})" style="background:${c.isVIP?'var(--vip)':'#e5e5ea'};color:${c.isVIP?'#fff':'#333'};padding:2px">${c.isVIP?'Hủy':'Lên'}</button></td><td><button onclick="db.ref('users/${a.key}').remove()" style="background:var(--red);color:#fff;padding:2px">X</button></td></tr>`})});
     db.ref('reset_requests').on('value',a=>{const b=document.getElementById('adm-rs-list');b.innerHTML="";a.forEach(a=>{const c=a.val();b.innerHTML+=`<div style="font-size:11px;border-bottom:1px solid #333;padding:5px;">${c.user}: ${c.key} <br><div class="adm-btn-group"><button style="background:var(--cyan);color:#fff" class="btn-small" onclick="handleRS('${a.key}','${c.uid}','${c.key}','THÀNH CÔNG')">XONG</button><button style="background:var(--red);color:#fff" class="btn-small" onclick="handleRS('${a.key}','${c.uid}','${c.key}','HỦY BỎ')">HỦY BỎ</button></div></div>`})})}
