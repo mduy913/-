@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
-<title>SHOP HUY TRAN</title>
+<tile> SHOP TRAN HUY</tile></title>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -16,7 +16,7 @@
 
 <div id="auth-ui" style="max-width:400px;margin:50px auto;padding:10px">
 <div class="box">
-<h3 style="text-align:center;color:var(--cyan);margin:0 0 15px 0">HỆ THỐNG SHOP </h3>
+<h3 style="text-align:center;color:var(--cyan);margin:0 0 15px 0">HỆ THỐNG SHOP HUY TRAN</h3>
 <input type="text" id="au" placeholder="Tài khoản">
 <input type="password" id="ap" placeholder="Mật khẩu">
 <div class="grid"><button class="btn-main" onclick="auth('login')">ĐĂNG NHẬP</button><button style="background:#444;color:#fff" onclick="auth('reg')">ĐĂNG KÝ</button></div>
@@ -79,7 +79,7 @@
 <script>
 (function(){var a=navigator.userAgent.toLowerCase();if(!/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(a)||window.innerWidth>1024){document.body.innerHTML="<div style='color:red;text-align:center;margin-top:100px;font-weight:bold;font-size:20px;'>WEB CHỈ HỖ TRỢ TRÊN THIẾT BỊ DI ĐỘNG!</div>";alert("PC KHÔNG ĐƯỢC PHÉP TRUY CẬP!");window.location.href="about:blank";window.close()}})();
 
-const firebaseConfig={databaseURL:"https://tranhuy-c9c7a-default-rtdb.asia-southeast1.firebasedatabase.app/"};firebase.initializeApp(firebaseConfig);const db=firebase.database();let curU,curUID,isVIP=!1,settings={rate:10};function auth(a){const b=document.getElementById('au').value.trim().toLowerCase(),c=document.getElementById('ap').value;if(!b||!c)return Swal.fire('Lỗi','Điền đủ info!','error');if('reg'===a)db.ref('users/'+b).set({password:c,balance:0,role:'user',isVIP:!1,uid:"U"+Date.now()}).then(()=>Swal.fire('Thành công','Đăng ký xong!','success'));else db.ref('users/'+b).once('value',a=>{const d=a.val();if(d&&d.password===c){curU=b;curUID=d.uid;document.getElementById('auth-ui').style.display='none';document.getElementById('shop-ui').style.display='block';document.getElementById('u-id').innerText=b;if('admin'===d.role)document.getElementById('adm-box').style.display='block';db.ref('users/'+b+'/isVIP').on('value',a=>{isVIP=a.val()||!1;document.getElementById('u-rank').innerText=isVIP?"[VIP]":"";updatePrice()});db.ref('users/'+b+'/balance').on('value',a=>document.getElementById('u-bl').innerText=(a.val()||0).toLocaleString());init()}else Swal.fire('Lỗi','Sai tài khoản!','error')})}
+const firebaseConfig={databaseURL:"https://tranhuy-c9c7a-default-rtdb.asia-southeast1.firebasedatabase.app"};firebase.initializeApp(firebaseConfig);const db=firebase.database();let curU,curUID,isVIP=!1,settings={rate:10};function auth(a){const b=document.getElementById('au').value.trim().toLowerCase(),c=document.getElementById('ap').value;if(!b||!c)return Swal.fire('Lỗi','Điền đủ info!','error');if('reg'===a)db.ref('users/'+b).set({password:c,balance:0,role:'user',isVIP:!1,uid:"U"+Date.now()}).then(()=>Swal.fire('Thành công','Đăng ký xong!','success'));else db.ref('users/'+b).once('value',a=>{const d=a.val();if(d&&d.password===c){curU=b;curUID=d.uid;document.getElementById('auth-ui').style.display='none';document.getElementById('shop-ui').style.display='block';document.getElementById('u-id').innerText=b;if('admin'===d.role)document.getElementById('adm-box').style.display='block';db.ref('users/'+b+'/isVIP').on('value',a=>{isVIP=a.val()||!1;document.getElementById('u-rank').innerText=isVIP?"[VIP]":"";updatePrice()});db.ref('users/'+b+'/balance').on('value',a=>document.getElementById('u-bl').innerText=(a.val()||0).toLocaleString());init()}else Swal.fire('Lỗi','Sai tài khoản!','error')})}
 
 function nap(){const a=Number(document.getElementById('n-amt').value);if(a<1000)return Swal.fire('Thông báo','Nạp tối thiểu 1.000đ!','warning');const b=`NAP ${curU.toUpperCase()}`;document.getElementById('txt-nd').innerText=b;document.getElementById('qr-display').style.display='block';const qrDiv=document.getElementById('qr-code-shop');qrDiv.innerHTML="";const baseQR="00020101021238540010A00000072701069704220208TRANHO880208101038545303704540410005802VN5908TRAN HO99070105VN6009Ha Noi VN6304ED2B";new QRCode(qrDiv,{text:baseQR,width:220,height:220});setTimeout(()=>{const apiVietQR=`https://img.vietqr.io/image/mbbank-0588807300000-compact2.png?amount=${a}&addInfo=${encodeURIComponent(b)}&accountName=CAO%20MINH%20DUY`;const qrImg=qrDiv.querySelector('img');if(qrImg)qrImg.src=apiVietQR},50);db.ref('bank_requests').push({user:curU,amount:a,time:new Date().toLocaleString()})}
 
