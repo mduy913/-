@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Upload Ảnh - Link Trực Tiếp</title>
+<title>Chụp Web - Full Screenshot</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body {
@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.container { max-width: 600px; width: 100%; }
+.container { max-width: 700px; width: 100%; }
 
 h1 {
     text-align: center;
@@ -48,80 +48,34 @@ h1 {
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-
-.drop-zone {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: 40px 20px;
-    background: rgba(0,0,0,0.3);
-    border: 3px dashed rgba(168,85,247,0.5);
-    border-radius: 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-.drop-zone:hover { border-color: #a855f7; background: rgba(168,85,247,0.05); }
-.drop-zone.drag { border-color: #22c55e; background: rgba(34,197,94,0.1); }
-.drop-zone input[type="file"] {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-.drop-icon { font-size: 60px; margin-bottom: 10px; animation: bounce 2s ease-in-out infinite; }
-.drop-text { font-size: 16px; color: #ddd; font-weight: 700; margin-bottom: 6px; }
-.drop-sub { font-size: 12px; color: #888; }
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-/* PREVIEW */
-.preview-box {
-    position: relative;
-    background: rgba(0,0,0,0.3);
-    border-radius: 12px;
-    padding: 10px;
-    margin-bottom: 12px;
-    display: none;
-    text-align: center;
-}
-.preview-box.show { display: block; }
-.preview-img {
-    max-width: 100%;
-    max-height: 250px;
-    border-radius: 10px;
-    display: block;
-    margin: 0 auto;
-}
-.preview-info {
-    margin-top: 10px;
-    font-size: 11px;
-    color: #888;
-    line-height: 1.5;
-}
-.clear-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: rgba(239,68,68,0.9);
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
 }
+.label small { font-size: 10px; color: #888; font-weight: 600; text-transform: none; }
 
-/* BUTTONS */
+.input-wrapper {
+    display: flex;
+    gap: 8px;
+}
+input[type="text"] {
+    flex: 1;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 10px;
+    color: #fff;
+    padding: 14px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s;
+}
+input[type="text"]:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 15px rgba(168,85,247,0.3);
+}
+input[type="text"]::placeholder { color: #666; }
+
 button.main-btn {
     width: 100%;
     padding: 16px;
@@ -134,10 +88,36 @@ button.main-btn {
     cursor: pointer;
     transition: 0.2s;
     letter-spacing: 1px;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 button.main-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168,85,247,0.4); }
 button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* PREVIEW */
+.preview-box {
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 12px;
+    display: none;
+    text-align: center;
+}
+.preview-box.show { display: block; }
+.preview-img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    background: #000;
+    border: 1px solid rgba(168,85,247,0.3);
+}
+.preview-info {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.5;
+}
 
 /* STATUS */
 .status {
@@ -155,128 +135,52 @@ button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .status.error { color: #ef4444; }
 .status.loading { color: #f59e0b; }
 
-/* RESULT */
-.result {
-    background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(0,180,216,0.1));
-    border: 2px solid rgba(34,197,94,0.4);
-    border-radius: 14px;
-    padding: 16px;
-    margin-top: 14px;
-    display: none;
+/* LOADING SPINNER */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(168,85,247,0.2);
+    border-top-color: #a855f7;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
 }
-.result.show { display: block; animation: slideIn 0.4s ease; }
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
-.result-title {
-    font-size: 12px;
-    font-weight: 800;
-    color: #22c55e;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.result-url {
-    background: rgba(0,0,0,0.4);
-    border-radius: 10px;
-    padding: 12px;
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    color: #86efac;
-    word-break: break-all;
-    line-height: 1.6;
-    border: 1px solid rgba(34,197,94,0.2);
-    margin-bottom: 10px;
-    user-select: all;
-    -webkit-user-select: all;
-}
-.result-actions {
+
+/* ACTIONS */
+.actions {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 8px;
+    margin-top: 12px;
+    display: none;
 }
-.result-btn {
-    padding: 12px 8px;
+.actions.show { display: grid; }
+
+.action-btn {
+    padding: 14px 8px;
     border: none;
     border-radius: 10px;
     color: #fff;
     font-weight: 800;
-    font-size: 11px;
+    font-size: 12px;
     cursor: pointer;
     transition: 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
-}
-.result-btn:hover { transform: translateY(-2px); }
-.btn-copy { background: linear-gradient(135deg, #22c55e, #16a34a); }
-.btn-open { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-.btn-new { background: linear-gradient(135deg, #a855f7, #ec4899); }
-
-/* HISTORY */
-.history {
-    max-height: 300px;
-    overflow-y: auto;
-}
-.history-item {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    align-items: center;
-}
-.history-thumb {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    object-fit: cover;
-    background: #000;
-    flex-shrink: 0;
-}
-.history-info {
-    flex: 1;
-    min-width: 0;
-}
-.history-url {
-    font-size: 10px;
-    color: #86efac;
-    font-family: 'Courier New', monospace;
-    word-break: break-all;
-    margin-bottom: 4px;
-    cursor: pointer;
-}
-.history-url:active { color: #fff; }
-.history-time {
-    font-size: 9px;
-    color: #666;
-}
-.history-actions {
-    display: flex;
     gap: 4px;
-    flex-shrink: 0;
 }
-.history-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(168,85,247,0.2);
-    color: #d0b0ff;
-    font-size: 12px;
-    cursor: pointer;
-}
-.history-empty {
-    text-align: center;
-    padding: 30px 20px;
-    color: #666;
-    font-style: italic;
-    font-size: 12px;
-}
+.action-btn:hover { transform: translateY(-2px); }
+.action-btn small { font-size: 9px; opacity: 0.8; font-weight: 600; }
+.btn-download { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.btn-copy { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.btn-new { background: linear-gradient(135deg, #a855f7, #ec4899); }
 
 /* HINT */
 .hint {
@@ -295,309 +199,223 @@ button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 <body>
 
 <div class="container">
-    <h1>📸 UPLOAD ẢNH</h1>
-    <div class="subtitle">Chọn ảnh → Nhận link .png trực tiếp</div>
+    <h1>📸 CHỤP WEB</h1>
+    <div class="subtitle">Dán link → Chụp full page → Tải ZIP</div>
 
     <div class="hint">
-        💡 <b>Cách dùng:</b> Chọn ảnh → Đợi upload → Copy link → Dán vào shop, Facebook, forum...<br>
-        <b>Link vĩnh viễn</b> — Không cần tài khoản — Miễn phí hoàn toàn.
+        💡 <b>Cách dùng:</b><br>
+        1. Dán URL web cần chụp (VD: `https://facebook.com`)<br>
+        2. Nhấn CHỤP → đợi 5-15s<br>
+        3. Nhấn TẢI ZIP → nhận file ảnh
     </div>
 
-    <!-- UPLOAD -->
     <div class="card">
-        <div class="label">1️⃣ CHỌN ẢNH</div>
-        <label class="drop-zone" id="drop-zone">
-            <input type="file" id="file-input" accept="image/*" multiple>
-            <div class="drop-icon">📷</div>
-            <div class="drop-text">Nhấn để chọn ảnh</div>
-            <div class="drop-sub">Hoặc kéo thả ảnh vào đây</div>
-            <div class="drop-sub" style="margin-top:6px;">Hỗ trợ: JPG, PNG, GIF, WEBP</div>
-        </label>
+        <div class="label">📎 NHẬP LINK WEB</div>
+        <div class="input-wrapper">
+            <input type="text" id="url-input" placeholder="https://example.com" />
+        </div>
+        <button class="main-btn" id="capture-btn">📸 CHỤP WEB</button>
     </div>
 
-    <!-- PREVIEW -->
+    <div class="status" id="status">Sẵn sàng</div>
+
     <div class="preview-box" id="preview-box">
-        <button class="clear-btn" id="clear-btn">✕</button>
         <img class="preview-img" id="preview-img">
         <div class="preview-info" id="preview-info"></div>
     </div>
 
-    <!-- UPLOAD BUTTON -->
-    <button class="main-btn" id="upload-btn" disabled>🚀 UPLOAD ẢNH</button>
-
-    <div class="status" id="status">Chọn ảnh để bắt đầu</div>
-
-    <!-- RESULT -->
-    <div class="result" id="result">
-        <div class="result-title">✅ Upload thành công!</div>
-        <div class="result-url" id="result-url"></div>
-        <div class="result-actions">
-            <button class="result-btn btn-copy" id="copy-btn">
-                📋 COPY
-            </button>
-            <button class="result-btn btn-open" id="open-btn">
-                👁 XEM
-            </button>
-            <button class="result-btn btn-new" id="new-btn">
-                ➕ ẢNH MỚI
-            </button>
-        </div>
+    <div class="actions" id="actions">
+        <button class="action-btn btn-download" id="download-btn">
+            📥 TẢI ZIP
+            <small>.zip</small>
+        </button>
+        <button class="action-btn btn-copy" id="copy-btn">
+            📋 COPY URL
+            <small>Ảnh</small>
+        </button>
+        <button class="action-btn btn-new" id="new-btn">
+            ➕ MỚI
+            <small>Reset</small>
+        </button>
     </div>
 
-    <!-- HISTORY -->
-    <div class="card" id="history-card" style="display:none;">
-        <div class="label">📜 LỊCH SỬ UPLOAD</div>
-        <div class="history" id="history"></div>
+    <div class="card" style="margin-top:20px;font-size:11px;line-height:1.8;color:#888;">
+        <div style="font-weight:800;color:#a855f7;margin-bottom:8px;">ℹ️ THÔNG TIN</div>
+        <div>• <b>API:</b> Microlink (miễn phí 50 lần/ngày)</div>
+        <div>• <b>Giới hạn:</b> Ảnh tối đa 5MB</div>
+        <div>• <b>Web cần public</b> — không chụp được web login</div>
+        <div>• <b>JavaScript nặng</b> có thể load chậm</div>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (function() {
     'use strict';
 
     var $ = function(id) { return document.getElementById(id); };
-    var selectedFile = null;
-    var uploadHistory = [];
-
-    try {
-        var saved = localStorage.getItem('upload_history');
-        if (saved) uploadHistory = JSON.parse(saved);
-    } catch(e) {}
+    var currentImage = null;
+    var currentUrl = '';
+    var currentBlob = null;
 
     function setStatus(text, type) {
         var el = $('status');
-        el.textContent = text;
+        if (type === 'loading') {
+            el.innerHTML = '<span class="spinner"></span>' + text;
+        } else {
+            el.textContent = text;
+        }
         el.className = 'status' + (type ? ' ' + type : '');
     }
 
-    function formatSize(bytes) {
-        if (bytes < 1024) return bytes + ' B';
-        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-        return (bytes / 1024 / 1024).toFixed(2) + ' MB';
-    }
-
     function reset() {
-        selectedFile = null;
+        currentImage = null;
+        currentUrl = '';
+        currentBlob = null;
         $('preview-box').classList.remove('show');
-        $('result').classList.remove('show');
-        $('file-input').value = '';
-        $('upload-btn').disabled = true;
-        setStatus('Chọn ảnh để bắt đầu');
+        $('actions').classList.remove('show');
+        $('url-input').value = '';
+        $('capture-btn').disabled = false;
+        setStatus('Sẵn sàng');
     }
 
-    // Chọn file
-    $('file-input').addEventListener('change', function(e) {
-        var file = e.target.files[0];
-        if (!file) return;
-        handleFile(file);
-    });
-
-    // Kéo thả
-    var dropZone = $('drop-zone');
-    dropZone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        dropZone.classList.add('drag');
-    });
-    dropZone.addEventListener('dragleave', function() {
-        dropZone.classList.remove('drag');
-    });
-    dropZone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        dropZone.classList.remove('drag');
-        var file = e.dataTransfer.files[0];
-        if (file) handleFile(file);
-    });
-
-    function handleFile(file) {
-        if (!file.type.startsWith('image/')) {
-            setStatus('❌ File không phải ảnh!', 'error');
-            return;
-        }
-        if (file.size > 5 * 1024 * 1024) {
-            setStatus('❌ Ảnh quá lớn (>5MB). Nén lại trước khi upload!', 'error');
-            return;
-        }
-
-        selectedFile = file;
-
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('preview-img').src = e.target.result;
-            $('preview-info').textContent = file.name + ' • ' + formatSize(file.size);
-            $('preview-box').classList.add('show');
-            $('upload-btn').disabled = false;
-            setStatus('✅ Đã chọn ảnh. Nhấn UPLOAD để tiếp tục', 'success');
-            $('result').classList.remove('show');
-        };
-        reader.readAsDataURL(file);
-    }
-
-    // Xoá ảnh
-    $('clear-btn').onclick = reset;
-
-    // Upload
-    $('upload-btn').onclick = function() {
-        if (!selectedFile) return;
-
-        var btn = $('upload-btn');
-        btn.disabled = true;
-        btn.textContent = '⏳ ĐANG UPLOAD...';
-        setStatus('⏳ Đang upload ảnh lên server...', 'loading');
-
-        var formData = new FormData();
-        formData.append('reqtype', 'fileupload');
-        formData.append('fileToUpload', selectedFile);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://catbox.moe/user/api.php', true);
-        xhr.timeout = 60000;
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var url = xhr.responseText.trim();
-                if (url && url.indexOf('http') === 0) {
-                    showResult(url);
-                    addToHistory(url, selectedFile.name);
-                } else {
-                    setStatus('❌ Lỗi: ' + url, 'error');
-                    btn.disabled = false;
-                    btn.textContent = '🚀 UPLOAD ẢNH';
-                }
-            } else {
-                setStatus('❌ Lỗi HTTP ' + xhr.status + '. Thử lại sau!', 'error');
-                btn.disabled = false;
-                btn.textContent = '🚀 UPLOAD ẢNH';
-            }
-        };
-
-        xhr.onerror = function() {
-            setStatus('❌ Lỗi mạng. Kiểm tra kết nối!', 'error');
-            btn.disabled = false;
-            btn.textContent = '🚀 UPLOAD ẢNH';
-        };
-
-        xhr.ontimeout = function() {
-            setStatus('❌ Timeout 60s. Ảnh có thể quá lớn!', 'error');
-            btn.disabled = false;
-            btn.textContent = '🚀 UPLOAD ẢNH';
-        };
-
-        xhr.send(formData);
-    };
-
-    function showResult(url) {
-        $('result-url').textContent = url;
-        $('result').classList.add('show');
-        setStatus('✅ Upload thành công! Link đã sẵn sàng', 'success');
-
-        $('upload-btn').disabled = false;
-        $('upload-btn').textContent = '🚀 UPLOAD ẢNH';
-
-        // Auto copy
-        try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(function() {
-                    $('copy-btn').innerHTML = '✅ ĐÃ COPY';
-                    setTimeout(function() {
-                        $('copy-btn').innerHTML = '📋 COPY';
-                    }, 2000);
-                });
-            }
-        } catch(e) {}
-    }
-
-    // Copy
-    $('copy-btn').onclick = function() {
-        var url = $('result-url').textContent;
-        if (!url) return;
-
-        try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(function() {
-                    $('copy-btn').innerHTML = '✅ ĐÃ COPY';
-                    setTimeout(function() {
-                        $('copy-btn').innerHTML = '📋 COPY';
-                    }, 2000);
-                });
-            } else {
-                var ta = document.createElement('textarea');
-                ta.value = url;
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                $('copy-btn').innerHTML = '✅ ĐÃ COPY';
-                setTimeout(function() {
-                    $('copy-btn').innerHTML = '📋 COPY';
-                }, 2000);
-            }
-        } catch(e) {
-            setStatus('❌ Không copy được. Tự bôi đen link để copy!', 'error');
-        }
-    };
-
-    // Mở link
-    $('open-btn').onclick = function() {
-        var url = $('result-url').textContent;
-        if (url) window.open(url, '_blank');
-    };
-
-    // Ảnh mới
     $('new-btn').onclick = reset;
 
-    // Lịch sử
-    function addToHistory(url, name) {
-        uploadHistory.unshift({
-            url: url,
-            name: name,
-            time: Date.now()
-        });
-        if (uploadHistory.length > 20) uploadHistory.pop();
-
-        try {
-            localStorage.setItem('upload_history', JSON.stringify(uploadHistory));
-        } catch(e) {}
-
-        renderHistory();
-    }
-
-    function renderHistory() {
-        var el = $('history');
-        var card = $('history-card');
-
-        if (uploadHistory.length === 0) {
-            card.style.display = 'none';
+    // Chụp web
+    $('capture-btn').onclick = function() {
+        var url = $('url-input').value.trim();
+        if (!url) {
+            setStatus('❌ Chưa nhập link web!', 'error');
             return;
         }
 
-        card.style.display = 'block';
-        var html = '';
+        if (!/^https?:\/\//i.test(url)) {
+            url = 'https://' + url;
+        }
 
-        uploadHistory.forEach(function(item, idx) {
-            var time = new Date(item.time).toLocaleString('vi-VN');
-            html += '<div class="history-item">';
-            html += '<img class="history-thumb" src="' + item.url + '" onerror="this.src=\'data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23222%22/><text x=%2230%22 y=%2235%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22%23666%22>?</text></svg>\'">';
-            html += '<div class="history-info">';
-            html += '<div class="history-url" onclick="window.open(\'' + item.url + '\',\'_blank\')">' + item.url.substring(0, 50) + (item.url.length > 50 ? '...' : '') + '</div>';
-            html += '<div class="history-time">' + time + '</div>';
-            html += '</div>';
-            html += '<div class="history-actions">';
-            html += '<button class="history-btn" onclick="copyHistory(' + idx + ')">📋</button>';
-            html += '</div>';
-            html += '</div>';
-        });
+        currentUrl = url;
+        $('capture-btn').disabled = true;
+        $('preview-box').classList.remove('show');
+        $('actions').classList.remove('show');
+        setStatus('⏳ Đang chụp web... Vui lòng đợi 5-15s', 'loading');
 
-        el.innerHTML = html;
-    }
+        // Microlink API - miễn phí, không cần key
+        var apiUrl = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&screenshot=true&meta=false&embed=screenshot.url';
 
-    window.copyHistory = function(idx) {
-        var url = uploadHistory[idx].url;
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+
+        var timeout = setTimeout(function() {
+            if (!currentImage) {
+                setStatus('❌ Timeout 30s. Web có thể quá nặng hoặc bị chặn!', 'error');
+                $('capture-btn').disabled = false;
+            }
+        }, 30000);
+
+        img.onload = function() {
+            clearTimeout(timeout);
+            currentImage = img;
+
+            $('preview-img').src = img.src;
+            $('preview-info').textContent = '✅ Đã chụp: ' + url + ' (' + img.width + 'x' + img.height + 'px)';
+            $('preview-box').classList.add('show');
+            $('actions').classList.add('show');
+            setStatus('✅ Chụp thành công! Nhấn TẢI ZIP để nhận file', 'success');
+            $('capture-btn').disabled = false;
+
+            // Fetch blob để tải
+            fetch(img.src)
+                .then(function(r) { return r.blob(); })
+                .then(function(blob) {
+                    currentBlob = blob;
+                })
+                .catch(function(err) {
+                    console.warn('Không fetch được blob:', err);
+                });
+        };
+
+        img.onerror = function() {
+            clearTimeout(timeout);
+            setStatus('❌ Không chụp được web này. Có thể web chặn bot hoặc cần login!', 'error');
+            $('capture-btn').disabled = false;
+        };
+
+        img.src = apiUrl;
+    };
+
+    // Tải ZIP
+    $('download-btn').onclick = async function() {
+        if (!currentUrl || !currentImage) {
+            setStatus('❌ Chưa có ảnh để tải!', 'error');
+            return;
+        }
+
+        var btn = $('download-btn');
+        btn.disabled = true;
+        setStatus('⏳ Đang nén ZIP...', 'loading');
+
+        try {
+            var zip = new JSZip();
+            var folderName = new URL(currentUrl).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
+            var folder = zip.folder(folderName);
+
+            var imgBlob = currentBlob;
+            if (!imgBlob) {
+                var response = await fetch(currentImage.src);
+                imgBlob = await response.blob();
+            }
+
+            var fileName = 'screenshot_' + Date.now() + '.png';
+            folder.file(fileName, imgBlob);
+
+            // Thêm file info.txt
+            var info = [
+                'URL: ' + currentUrl,
+                'Thời gian: ' + new Date().toLocaleString('vi-VN'),
+                'Kích thước ảnh: ' + currentImage.width + ' x ' + currentImage.height + ' px',
+                'Dung lượng: ' + (imgBlob.size / 1024).toFixed(1) + ' KB',
+                'Công cụ: MDUY Screenshot Tool'
+            ].join('\n');
+            folder.file('info.txt', info);
+
+            var zipBlob = await zip.generateAsync({
+                type: 'blob',
+                compression: 'DEFLATE',
+                compressionOptions: { level: 6 }
+            });
+
+            var url = URL.createObjectURL(zipBlob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'screenshot_' + Date.now() + '.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            setStatus('✅ Đã tải ZIP (' + (zipBlob.size / 1024).toFixed(1) + ' KB)', 'success');
+        } catch (err) {
+            console.error(err);
+            setStatus('❌ Lỗi nén: ' + err.message, 'error');
+        } finally {
+            btn.disabled = false;
+        }
+    };
+
+    // Copy URL ảnh
+    $('copy-btn').onclick = function() {
+        if (!currentImage) return;
+
+        var url = currentImage.src;
         try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url);
-                setStatus('✅ Đã copy link từ lịch sử', 'success');
+                navigator.clipboard.writeText(url).then(function() {
+                    setStatus('✅ Đã copy URL ảnh', 'success');
+                    $('copy-btn').innerHTML = '✅ ĐÃ COPY<small>URL</small>';
+                    setTimeout(function() {
+                        $('copy-btn').innerHTML = '📋 COPY URL<small>Ảnh</small>';
+                    }, 2000);
+                });
             } else {
                 var ta = document.createElement('textarea');
                 ta.value = url;
@@ -607,16 +425,21 @@ button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
                 ta.select();
                 document.execCommand('copy');
                 document.body.removeChild(ta);
-                setStatus('✅ Đã copy link', 'success');
+                setStatus('✅ Đã copy URL ảnh', 'success');
             }
-        } catch(e) {
-            setStatus('❌ Không copy được. Nhấn vào link để xem!', 'error');
+        } catch (e) {
+            setStatus('❌ Không copy được', 'error');
         }
     };
 
-    renderHistory();
+    // Enter để chụp
+    $('url-input').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            $('capture-btn').click();
+        }
+    });
 
-    console.log('%c📸 Upload Ảnh đã sẵn sàng!', 'color: #a855f7; font-size: 14px; font-weight: bold;');
+    console.log('%c📸 Screenshot Tool đã sẵn sàng!', 'color: #a855f7; font-size: 14px; font-weight: bold;');
 })();
 </script>
 
