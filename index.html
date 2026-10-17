@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ultimate HTML Cloner</title>
+<title>Ultimate HTML Cloner V5</title>
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%); color: #fff; min-height: 100vh; padding: 14px; display: flex; flex-direction: column; align-items: center; }
@@ -22,7 +22,7 @@
     .status.loading { color: #f59e0b; }
     .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,180,216,0.2); border-top-color: #00b4d8; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .log { background: rgba(0,0,0,0.5); border-radius: 10px; padding: 12px; max-height: 200px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; margin-top: 12px; display: none; }
+    .log { background: rgba(0,0,0,0.5); border-radius: 10px; padding: 12px; max-height: 250px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; margin-top: 12px; display: none; }
     .log.show { display: block; }
     .log-item { padding: 2px 0; }
     .log-item.ok { color: #22c55e; }
@@ -37,8 +37,8 @@
 <body>
 
 <div class="container">
-    <h1>🕵️ HTML FULL CLONER</h1>
-    <div class="subtitle">Tự động Fix CSS/JS/Ảnh vào 1 File HTML</div>
+    <h1>🕵️ HTML CLONER V5</h1>
+    <div class="subtitle">Tải 100% CSS/JS/Ảnh (Cố gắng tối đa)</div>
 
     <div class="card">
         <div class="label">📎 NHẬP URL CẦN CLONE</div>
@@ -81,7 +81,7 @@
         $('progress-fill').style.width = p + '%';
     }
 
-    async function fetchWithTimeout(url, options = {}, timeout = 10000) {
+    async function fetchWithTimeout(url, options = {}, timeout = 8000) {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
         try {
@@ -94,7 +94,6 @@
         }
     }
 
-    // Lấy HTML đã Render qua Microlink
     async function getRenderedHtml(url) {
         addLog('📡 Đang Render JS qua Microlink...', 'info');
         var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=html&data.html.type=text';
@@ -105,6 +104,27 @@
                 return json.data.html;
             }
         } catch (e) { addLog('Microlink lỗi: ' + e.message, 'warn'); }
+        return null;
+    }
+
+    // Danh sách Proxy mạnh (Tải file text)
+    async function fetchTextResource(url) {
+        var proxies = [
+            'https://thingproxy.freeboard.io/fetch/' + url,
+            'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
+            'https://corsproxy.io/?' + encodeURIComponent(url),
+            'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
+            'https://cors.eu.org/' + url
+        ];
+        for (var i = 0; i < proxies.length; i++) {
+            try {
+                let res = await fetchWithTimeout(proxies[i], {}, 6000);
+                if (res.ok) {
+                    let text = await res.text();
+                    if (text && text.length > 10) return text;
+                }
+            } catch (e) {}
+        }
         return null;
     }
 
@@ -133,9 +153,11 @@
             zip = new JSZip();
             var root = zip.folder(baseHost);
             var assets = root.folder('assets');
+            var cssDir = assets.folder('css');
+            var jsDir = assets.folder('js');
             var imgDir = assets.folder('img');
 
-            // Chuyển tất cả link tương đối thành tuyệt đối
+            // Chuyển link tương đối thành tuyệt đối
             doc.querySelectorAll('link[href], script[src], img[src]').forEach(el => {
                 ['href', 'src'].forEach(attr => {
                     let val = el.getAttribute(attr);
@@ -145,54 +167,96 @@
                 });
             });
 
-            // Thu thập ảnh
-            var imgUrls = new Set();
-            doc.querySelectorAll('img').forEach(el => {
-                let val = el.getAttribute('src');
-                if (val && !val.startsWith('data:')) {
-                    try { imgUrls.add(new URL(val, url).href); } catch(e){}
+            // 1. TẢI CSS
+            var cssLinks = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
+            var cssMap = {};
+            var i = 0;
+            for (let el of cssLinks) {
+                let u = el.getAttribute('href');
+                addLog('⬇ Đang tải CSS: ' + u.substring(0, 40), 'info');
+                let text = await fetchTextResource(u);
+                if (text) {
+                    let name = 'style_' + (++i) + '.css';
+                    cssDir.file(name, text);
+                    cssMap[u] = 'assets/css/' + name;
+                    addLog('✓ CSS: ' + name, 'ok');
+                } else {
+                    addLog('✗ Lỗi CSS: ' + u.substring(0, 40), 'err');
                 }
-            });
-
-            addLog(`📋 Tìm thấy ${imgUrls.size} Ảnh. Bắt đầu tải...`, 'info');
-            setProgress(30);
-
-            // Tải Ảnh (Ép qua WebP để fix CORS)
-            var k = 0;
-            var imgMap = {};
-            for (let u of imgUrls) {
-                try {
-                    let res = await fetchWithTimeout('https://wsrv.nl/?url=' + encodeURIComponent(u) + '&output=webp');
-                    if (res.ok) {
-                        let blob = await res.blob();
-                        let name = (new URL(u)).pathname.split('/').pop() || 'img.webp';
-                        name = name.replace(/[^a-zA-Z0-9._-]/g, '_') + '.webp';
-                        imgDir.file(name, blob);
-                        imgMap[u] = 'assets/img/' + name;
-                        addLog('✓ Ảnh: ' + name, 'ok');
-                    }
-                } catch(e) { 
-                    addLog('✗ Ảnh lỗi: ' + u.substring(0, 30), 'err');
-                    imgMap[u] = 'https://wsrv.nl/?url=' + encodeURIComponent(u);
-                }
-                setProgress(30 + (++k / imgUrls.size) * 50);
+                setProgress(20 + (i / cssLinks.length) * 20);
             }
 
-            // Cập nhật lại link ảnh trong HTML
+            // 2. TẢI JS
+            var jsScripts = Array.from(doc.querySelectorAll('script[src]'));
+            var jsMap = {};
+            var j = 0;
+            for (let el of jsScripts) {
+                let u = el.getAttribute('src');
+                addLog('⬇ Đang tải JS: ' + u.substring(0, 40), 'info');
+                let text = await fetchTextResource(u);
+                if (text) {
+                    let name = 'script_' + (++j) + '.js';
+                    jsDir.file(name, text);
+                    jsMap[u] = 'assets/js/' + name;
+                    addLog('✓ JS: ' + name, 'ok');
+                } else {
+                    addLog('✗ Lỗi JS: ' + u.substring(0, 40), 'err');
+                }
+                setProgress(40 + (j / jsScripts.length) * 20);
+            }
+
+            // 3. TẢI ẢNH
+            var imgs = Array.from(doc.querySelectorAll('img[src]'));
+            var imgMap = {};
+            var k = 0;
+            for (let el of imgs) {
+                let u = el.getAttribute('src');
+                if (u.startsWith('data:')) continue;
+                try {
+                    let res = await fetchWithTimeout('https://wsrv.nl/?url=' + encodeURIComponent(u) + '&output=webp', {}, 6000);
+                    if (res.ok) {
+                        let blob = await res.blob();
+                        let name = 'img_' + (++k) + '.webp';
+                        imgDir.file(name, blob);
+                        imgMap[u] = 'assets/img/' + name;
+                    }
+                } catch(e) {
+                    imgMap[u] = 'https://wsrv.nl/?url=' + encodeURIComponent(u);
+                }
+                setProgress(60 + (k / imgs.length) * 30);
+            }
+
+            // 4. CẬP NHẬT LẠI HTML
             var newHtml = doc.documentElement.outerHTML;
+            
+            // Thay CSS
+            Object.keys(cssMap).forEach(oldUrl => {
+                newHtml = newHtml.split(oldUrl).join(cssMap[oldUrl]);
+            });
+            // Thay JS
+            Object.keys(jsMap).forEach(oldUrl => {
+                newHtml = newHtml.split(oldUrl).join(jsMap[oldUrl]);
+            });
+            // Thay Ảnh
             Object.keys(imgMap).forEach(oldUrl => {
                 newHtml = newHtml.split(oldUrl).join(imgMap[oldUrl]);
             });
 
-            // Bỏ qua việc tải CSS/JS (Do CORS 100% ko tải được). 
-            // Giữ nguyên link online trong HTML. Trình duyệt khi mở file sẽ tự tải.
-            addLog('ℹ Bỏ qua tải CSS/JS (Do CORS). Sẽ giữ nguyên link online.', 'warn');
-            addLog('ℹ Khi mở file HTML, trình duyệt sẽ tự tải CSS/JS gốc.', 'info');
+            // Nhúng CSS trực tiếp vào HEAD (nếu tải được)
+            let inlineCss = "";
+            for (let name in cssMap) {
+                let cssContent = await cssDir.file(cssMap[name]).async("string");
+                if (cssContent) inlineCss += `\n/* ${cssMap[name]} */\n${cssContent}\n`;
+            }
+            if (inlineCss) {
+                newHtml = newHtml.replace('</head>', `<style>\n${inlineCss}\n</style>\n</head>`);
+                addLog('✓ Đã nhúng CSS vào HTML', 'ok');
+            }
 
             root.file('index.html', newHtml);
-            root.file('INFO.txt', `URL: ${url}\nTime: ${new Date().toLocaleString('vi-VN')}\n\nLưu ý:\n- CSS/JS được giữ nguyên link online (do CORS).\n- Ảnh đã được tải về hoặc chuyển sang link dự phòng (WebP).`);
+            root.file('INFO.txt', `URL: ${url}\nTime: ${new Date().toLocaleString('vi-VN')}\nCSS: ${i} tải được, ${cssLinks.length-i} lỗi\nJS: ${j} tải được, ${jsScripts.length-j} lỗi\nẢnh: ${k} tải được`);
 
-            setProgress(90);
+            setProgress(95);
             setStatus('⏳ Đang nén file ZIP...', 'loading');
             var blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
 
@@ -206,7 +270,7 @@
 
             setProgress(100);
             addLog('✅ Đã tải ZIP!', 'ok');
-            setStatus('✅ Nén thành công! (Mở file HTML để xem)', 'success');
+            setStatus('✅ Nén thành công! (Xem chi tiết trong INFO.txt)', 'success');
 
         } catch (err) {
             addLog('❌ Lỗi: ' + err.message, 'err');
