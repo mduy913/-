@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Chụp Web - Full Screenshot</title>
+<title>Clone Source Web</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body {
@@ -17,7 +17,6 @@ body {
     align-items: center;
 }
 .container { max-width: 700px; width: 100%; }
-
 h1 {
     text-align: center;
     font-size: 24px;
@@ -27,13 +26,7 @@ h1 {
     -webkit-text-fill-color: transparent;
     font-weight: 900;
 }
-.subtitle {
-    text-align: center;
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 20px;
-}
-
+.subtitle { text-align: center; font-size: 12px; color: #888; margin-bottom: 20px; }
 .card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(168,85,247,0.3);
@@ -48,34 +41,23 @@ h1 {
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.label small { font-size: 10px; color: #888; font-weight: 600; text-transform: none; }
-
-.input-wrapper {
-    display: flex;
-    gap: 8px;
 }
 input[type="text"] {
-    flex: 1;
+    width: 100%;
     background: rgba(0,0,0,0.4);
     border: 1px solid rgba(168,85,247,0.3);
     border-radius: 10px;
     color: #fff;
-    padding: 14px 14px;
+    padding: 14px;
     font-size: 14px;
     font-family: inherit;
     outline: none;
-    transition: 0.2s;
+    margin-bottom: 12px;
 }
 input[type="text"]:focus {
     border-color: #a855f7;
     box-shadow: 0 0 15px rgba(168,85,247,0.3);
 }
-input[type="text"]::placeholder { color: #666; }
-
 button.main-btn {
     width: 100%;
     padding: 16px;
@@ -87,102 +69,52 @@ button.main-btn {
     font-size: 14px;
     cursor: pointer;
     transition: 0.2s;
-    letter-spacing: 1px;
-    margin-top: 12px;
 }
-button.main-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168,85,247,0.4); }
-button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-/* PREVIEW */
-.preview-box {
-    background: rgba(0,0,0,0.3);
-    border-radius: 12px;
-    padding: 10px;
-    margin-bottom: 12px;
-    display: none;
-    text-align: center;
-}
-.preview-box.show { display: block; }
-.preview-img {
-    max-width: 100%;
-    max-height: 400px;
-    border-radius: 10px;
-    display: block;
-    margin: 0 auto;
-    background: #000;
-    border: 1px solid rgba(168,85,247,0.3);
-}
-.preview-info {
-    margin-top: 10px;
-    font-size: 11px;
-    color: #888;
-    line-height: 1.5;
-}
-
-/* STATUS */
+button.main-btn:hover { transform: translateY(-2px); }
+button.main-btn:disabled { opacity: 0.5; }
 .status {
     font-size: 12px;
     text-align: center;
     padding: 12px;
     color: #22c55e;
     min-height: 40px;
-    line-height: 1.5;
     background: rgba(0,0,0,0.3);
     border-radius: 10px;
     margin-top: 12px;
-    word-break: break-all;
+    line-height: 1.6;
 }
 .status.error { color: #ef4444; }
 .status.loading { color: #f59e0b; }
-
-/* LOADING SPINNER */
 .spinner {
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(168,85,247,0.2);
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(168,85,247,0.2);
     border-top-color: #a855f7;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
-    margin-right: 8px;
+    margin-right: 6px;
     vertical-align: middle;
 }
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* ACTIONS */
-.actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
+@keyframes spin { to { transform: rotate(360deg); } }
+.log {
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.6;
     margin-top: 12px;
     display: none;
 }
-.actions.show { display: grid; }
-
-.action-btn {
-    padding: 14px 8px;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: 800;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-}
-.action-btn:hover { transform: translateY(-2px); }
-.action-btn small { font-size: 9px; opacity: 0.8; font-weight: 600; }
-.btn-download { background: linear-gradient(135deg, #22c55e, #16a34a); }
-.btn-copy { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-.btn-new { background: linear-gradient(135deg, #a855f7, #ec4899); }
-
-/* HINT */
+.log.show { display: block; }
+.log-item { padding: 2px 0; }
+.log-item.ok { color: #22c55e; }
+.log-item.err { color: #ef4444; }
+.log-item.info { color: #00b4d8; }
+.log-item.warn { color: #f59e0b; }
 .hint {
     background: rgba(59,130,246,0.1);
     border: 1px solid rgba(59,130,246,0.4);
@@ -190,62 +122,55 @@ button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     padding: 12px;
     font-size: 11px;
     color: #93c5fd;
-    line-height: 1.6;
     margin-bottom: 14px;
 }
 .hint b { color: #60a5fa; }
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 12px;
+    display: none;
+}
+.progress-bar.show { display: block; }
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #a855f7, #ec4899);
+    width: 0%;
+    transition: width 0.3s;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📸 CHỤP WEB</h1>
-    <div class="subtitle">Dán link → Chụp full page → Tải ZIP</div>
+    <h1>🔍 CLONE SOURCE WEB</h1>
+    <div class="subtitle">Tải toàn bộ HTML + CSS + JS + ảnh + font</div>
 
     <div class="hint">
         💡 <b>Cách dùng:</b><br>
-        1. Dán URL web cần chụp (VD: `https://facebook.com`)<br>
-        2. Nhấn CHỤP → đợi 5-15s<br>
-        3. Nhấn TẢI ZIP → nhận file ảnh
+        1. Dán URL web cần clone (VD: `https://example.com`)<br>
+        2. Nhấn CLONE → đợi 10-60s<br>
+        3. Nhấn TẢI ZIP → nhận full source
     </div>
 
     <div class="card">
-        <div class="label">📎 NHẬP LINK WEB</div>
-        <div class="input-wrapper">
-            <input type="text" id="url-input" placeholder="https://example.com" />
-        </div>
-        <button class="main-btn" id="capture-btn">📸 CHỤP WEB</button>
+        <div class="label">📎 NHẬP URL</div>
+        <input type="text" id="url-input" placeholder="https://example.com" />
+        <button class="main-btn" id="clone-btn">🔍 CLONE SOURCE</button>
     </div>
 
     <div class="status" id="status">Sẵn sàng</div>
 
-    <div class="preview-box" id="preview-box">
-        <img class="preview-img" id="preview-img">
-        <div class="preview-info" id="preview-info"></div>
+    <div class="progress-bar" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
     </div>
 
-    <div class="actions" id="actions">
-        <button class="action-btn btn-download" id="download-btn">
-            📥 TẢI ZIP
-            <small>.zip</small>
-        </button>
-        <button class="action-btn btn-copy" id="copy-btn">
-            📋 COPY URL
-            <small>Ảnh</small>
-        </button>
-        <button class="action-btn btn-new" id="new-btn">
-            ➕ MỚI
-            <small>Reset</small>
-        </button>
-    </div>
+    <div class="log" id="log"></div>
 
-    <div class="card" style="margin-top:20px;font-size:11px;line-height:1.8;color:#888;">
-        <div style="font-weight:800;color:#a855f7;margin-bottom:8px;">ℹ️ THÔNG TIN</div>
-        <div>• <b>API:</b> Microlink (miễn phí 50 lần/ngày)</div>
-        <div>• <b>Giới hạn:</b> Ảnh tối đa 5MB</div>
-        <div>• <b>Web cần public</b> — không chụp được web login</div>
-        <div>• <b>JavaScript nặng</b> có thể load chậm</div>
-    </div>
+    <button class="main-btn" id="download-btn" style="display:none; margin-top:12px;">📥 TẢI ZIP</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -254,192 +179,299 @@ button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     'use strict';
 
     var $ = function(id) { return document.getElementById(id); };
-    var currentImage = null;
-    var currentUrl = '';
-    var currentBlob = null;
+    var zip = null;
+    var baseUrl = '';
+    var baseHost = '';
 
     function setStatus(text, type) {
         var el = $('status');
-        if (type === 'loading') {
-            el.innerHTML = '<span class="spinner"></span>' + text;
-        } else {
-            el.textContent = text;
-        }
+        el.innerHTML = type === 'loading' ? '<span class="spinner"></span>' + text : text;
         el.className = 'status' + (type ? ' ' + type : '');
     }
 
-    function reset() {
-        currentImage = null;
-        currentUrl = '';
-        currentBlob = null;
-        $('preview-box').classList.remove('show');
-        $('actions').classList.remove('show');
-        $('url-input').value = '';
-        $('capture-btn').disabled = false;
-        setStatus('Sẵn sàng');
+    function addLog(text, type) {
+        var log = $('log');
+        log.classList.add('show');
+        var item = document.createElement('div');
+        item.className = 'log-item ' + (type || 'info');
+        item.textContent = text;
+        log.appendChild(item);
+        log.scrollTop = log.scrollHeight;
     }
 
-    $('new-btn').onclick = reset;
+    function clearLog() {
+        $('log').innerHTML = '';
+        $('log').classList.remove('show');
+    }
 
-    // Chụp web
-    $('capture-btn').onclick = function() {
-        var url = $('url-input').value.trim();
-        if (!url) {
-            setStatus('❌ Chưa nhập link web!', 'error');
-            return;
-        }
+    function setProgress(percent) {
+        $('progress-bar').classList.add('show');
+        $('progress-fill').style.width = percent + '%';
+    }
 
-        if (!/^https?:\/\//i.test(url)) {
-            url = 'https://' + url;
-        }
+    function resetProgress() {
+        $('progress-bar').classList.remove('show');
+        $('progress-fill').style.width = '0%';
+    }
 
-        currentUrl = url;
-        $('capture-btn').disabled = true;
-        $('preview-box').classList.remove('show');
-        $('actions').classList.remove('show');
-        setStatus('⏳ Đang chụp web... Vui lòng đợi 5-15s', 'loading');
+    // ============ PROXY FETCH ============
+    function proxyFetch(url, type) {
+        // Dùng 3 proxy fallback
+        var proxies = [
+            function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); },
+            function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+            function(u) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
+        ];
 
-        // Microlink API - miễn phí, không cần key
-        var apiUrl = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&screenshot=true&meta=false&embed=screenshot.url';
+        return new Promise(function(resolve, reject) {
+            var attempts = 0;
 
-        var img = new Image();
-        img.crossOrigin = 'anonymous';
+            function tryNext() {
+                if (attempts >= proxies.length) {
+                    reject(new Error('Tất cả proxy đều lỗi'));
+                    return;
+                }
 
-        var timeout = setTimeout(function() {
-            if (!currentImage) {
-                setStatus('❌ Timeout 30s. Web có thể quá nặng hoặc bị chặn!', 'error');
-                $('capture-btn').disabled = false;
+                var proxyUrl = proxies[attempts](url);
+                attempts++;
+
+                fetch(proxyUrl)
+                    .then(function(r) {
+                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                        return type === 'text' ? r.text() : r.blob();
+                    })
+                    .then(resolve)
+                    .catch(function(err) {
+                        addLog('Proxy ' + attempts + ' lỗi: ' + err.message, 'warn');
+                        tryNext();
+                    });
             }
-        }, 30000);
 
-        img.onload = function() {
-            clearTimeout(timeout);
-            currentImage = img;
+            tryNext();
+        });
+    }
 
-            $('preview-img').src = img.src;
-            $('preview-info').textContent = '✅ Đã chụp: ' + url + ' (' + img.width + 'x' + img.height + 'px)';
-            $('preview-box').classList.add('show');
-            $('actions').classList.add('show');
-            setStatus('✅ Chụp thành công! Nhấn TẢI ZIP để nhận file', 'success');
-            $('capture-btn').disabled = false;
-
-            // Fetch blob để tải
-            fetch(img.src)
-                .then(function(r) { return r.blob(); })
-                .then(function(blob) {
-                    currentBlob = blob;
-                })
-                .catch(function(err) {
-                    console.warn('Không fetch được blob:', err);
-                });
-        };
-
-        img.onerror = function() {
-            clearTimeout(timeout);
-            setStatus('❌ Không chụp được web này. Có thể web chặn bot hoặc cần login!', 'error');
-            $('capture-btn').disabled = false;
-        };
-
-        img.src = apiUrl;
-    };
-
-    // Tải ZIP
-    $('download-btn').onclick = async function() {
-        if (!currentUrl || !currentImage) {
-            setStatus('❌ Chưa có ảnh để tải!', 'error');
-            return;
+    // ============ DOWNLOAD FILE ============
+    function getFileName(url, type) {
+        try {
+            var u = new URL(url);
+            var path = u.pathname;
+            var name = path.split('/').pop() || 'file';
+            if (!name.includes('.')) {
+                if (type === 'css') name += '.css';
+                else if (type === 'js') name += '.js';
+                else name += '.bin';
+            }
+            return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        } catch(e) {
+            return 'file_' + Date.now() + '.' + type;
         }
+    }
 
-        var btn = $('download-btn');
-        btn.disabled = true;
-        setStatus('⏳ Đang nén ZIP...', 'loading');
+    async function downloadResource(url, folder, type) {
+        try {
+            addLog('⬇ ' + url.substring(0, 80), 'info');
+            var blob = await proxyFetch(url, 'blob');
+            var name = getFileName(url, type);
+            folder.file(name, blob);
+            addLog('✓ ' + name + ' (' + Math.round(blob.size / 1024) + 'KB)', 'ok');
+            return { url: url, name: name, ok: true };
+        } catch(err) {
+            addLog('✗ Lỗi: ' + url.substring(0, 60), 'err');
+            return { url: url, name: null, ok: false };
+        }
+    }
+
+    // ============ CLONE ============
+    $('clone-btn').onclick = async function() {
+        var url = $('url-input').value.trim();
+        if (!url) { setStatus('❌ Chưa nhập URL!', 'error'); return; }
+        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+        $('clone-btn').disabled = true;
+        $('download-btn').style.display = 'none';
+        clearLog();
+        setProgress(5);
+        setStatus('⏳ Đang lấy HTML chính...', 'loading');
 
         try {
-            var zip = new JSZip();
-            var folderName = new URL(currentUrl).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
-            var folder = zip.folder(folderName);
+            var urlObj = new URL(url);
+            baseUrl = urlObj.origin + urlObj.pathname;
+            baseHost = urlObj.hostname;
 
-            var imgBlob = currentBlob;
-            if (!imgBlob) {
-                var response = await fetch(currentImage.src);
-                imgBlob = await response.blob();
+            addLog('🌐 URL gốc: ' + url, 'info');
+
+            // 1. Lấy HTML chính
+            var html = await proxyFetch(url, 'text');
+            addLog('✓ HTML: ' + Math.round(html.length / 1024) + 'KB', 'ok');
+
+            setProgress(20);
+            setStatus('⏳ Đang parse HTML...', 'loading');
+
+            // 2. Parse HTML
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+
+            // 3. Tạo ZIP
+            zip = new JSZip();
+            var rootFolder = zip.folder(baseHost);
+            var assetsFolder = rootFolder.folder('assets');
+            var cssFolder = assetsFolder.folder('css');
+            var jsFolder = assetsFolder.folder('js');
+            var imgFolder = assetsFolder.folder('img');
+            var fontFolder = assetsFolder.folder('fonts');
+
+            // Lưu HTML gốc
+            rootFolder.file('index.html', html);
+
+            // 4. Thu thập CSS
+            var cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
+            var cssUrls = [];
+            cssLinks.forEach(function(link) {
+                var href = link.href || link.getAttribute('href');
+                if (href) {
+                    try {
+                        var absolute = new URL(href, url).href;
+                        if (!cssUrls.includes(absolute)) cssUrls.push(absolute);
+                    } catch(e) {}
+                }
+            });
+            addLog('📋 CSS links: ' + cssUrls.length, 'info');
+
+            // 5. Thu thập JS
+            var jsLinks = doc.querySelectorAll('script[src]');
+            var jsUrls = [];
+            jsLinks.forEach(function(s) {
+                var src = s.src || s.getAttribute('src');
+                if (src) {
+                    try {
+                        var absolute = new URL(src, url).href;
+                        if (!jsUrls.includes(absolute)) jsUrls.push(absolute);
+                    } catch(e) {}
+                }
+            });
+            addLog('📋 JS links: ' + jsUrls.length, 'info');
+
+            // 6. Thu thập ảnh
+            var imgUrls = [];
+            doc.querySelectorAll('img[src]').forEach(function(img) {
+                try {
+                    var absolute = new URL(img.src, url).href;
+                    if (!imgUrls.includes(absolute)) imgUrls.push(absolute);
+                } catch(e) {}
+            });
+            doc.querySelectorAll('img[data-src]').forEach(function(img) {
+                try {
+                    var absolute = new URL(img.getAttribute('data-src'), url).href;
+                    if (!imgUrls.includes(absolute)) imgUrls.push(absolute);
+                } catch(e) {}
+            });
+            addLog('📋 Ảnh: ' + imgUrls.length, 'info');
+
+            // 7. Download CSS
+            setProgress(30);
+            setStatus('⏳ Đang tải CSS...', 'loading');
+            var cssMap = {};
+            for (var i = 0; i < cssUrls.length; i++) {
+                var result = await downloadResource(cssUrls[i], cssFolder, 'css');
+                if (result.ok) cssMap[cssUrls[i]] = 'assets/css/' + result.name;
+                setProgress(30 + (i + 1) / cssUrls.length * 15);
             }
 
-            var fileName = 'screenshot_' + Date.now() + '.png';
-            folder.file(fileName, imgBlob);
+            // 8. Download JS
+            setStatus('⏳ Đang tải JS...', 'loading');
+            var jsMap = {};
+            for (var j = 0; j < jsUrls.length; j++) {
+                var result = await downloadResource(jsUrls[j], jsFolder, 'js');
+                if (result.ok) jsMap[jsUrls[j]] = 'assets/js/' + result.name;
+                setProgress(45 + (j + 1) / jsUrls.length * 15);
+            }
 
-            // Thêm file info.txt
-            var info = [
-                'URL: ' + currentUrl,
-                'Thời gian: ' + new Date().toLocaleString('vi-VN'),
-                'Kích thước ảnh: ' + currentImage.width + ' x ' + currentImage.height + ' px',
-                'Dung lượng: ' + (imgBlob.size / 1024).toFixed(1) + ' KB',
-                'Công cụ: MDUY Screenshot Tool'
-            ].join('\n');
-            folder.file('info.txt', info);
+            // 9. Download ảnh
+            setStatus('⏳ Đang tải ảnh...', 'loading');
+            var imgMap = {};
+            for (var k = 0; k < imgUrls.length; k++) {
+                var result = await downloadResource(imgUrls[k], imgFolder, 'img');
+                if (result.ok) imgMap[imgUrls[k]] = 'assets/img/' + result.name;
+                setProgress(60 + (k + 1) / imgUrls.length * 30);
+            }
 
-            var zipBlob = await zip.generateAsync({
+            // 10. Sửa đường dẫn trong HTML
+            setStatus('⏳ Đang sửa đường dẫn...', 'loading');
+            addLog('🔧 Đang sửa link trong HTML...', 'info');
+
+            var newHtml = html;
+            // Thay CSS
+            Object.keys(cssMap).forEach(function(oldUrl) {
+                newHtml = newHtml.split(oldUrl).join(cssMap[oldUrl]);
+            });
+            // Thay JS
+            Object.keys(jsMap).forEach(function(oldUrl) {
+                newHtml = newHtml.split(oldUrl).join(jsMap[oldUrl]);
+            });
+            // Thay ảnh
+            Object.keys(imgMap).forEach(function(oldUrl) {
+                newHtml = newHtml.split(oldUrl).join(imgMap[oldUrl]);
+            });
+
+            // Ghi đè index.html
+            rootFolder.file('index.html', newHtml);
+
+            // Tạo file info
+            rootFolder.file('INFO.txt', [
+                'URL gốc: ' + url,
+                'Thời gian clone: ' + new Date().toLocaleString('vi-VN'),
+                'CSS đã tải: ' + Object.keys(cssMap).length + '/' + cssUrls.length,
+                'JS đã tải: ' + Object.keys(jsMap).length + '/' + jsUrls.length,
+                'Ảnh đã tải: ' + Object.keys(imgMap).length + '/' + imgUrls.length,
+                '',
+                'Lưu ý:',
+                '- Mở index.html để xem web',
+                '- Một số tài nguyên CDN có thể không tải được (CORS)',
+                '- Font Google có thể bị thiếu',
+                '- Nếu cần, thay CDN trong CSS/HTML'
+            ].join('\n'));
+
+            setProgress(95);
+            setStatus('⏳ Đang nén ZIP...', 'loading');
+
+            // 11. Tạo ZIP
+            var blob = await zip.generateAsync({
                 type: 'blob',
                 compression: 'DEFLATE',
                 compressionOptions: { level: 6 }
+            }, function(meta) {
+                setProgress(95 + meta.percent / 20);
             });
 
-            var url = URL.createObjectURL(zipBlob);
+            // 12. Tải về
+            var downloadUrl = URL.createObjectURL(blob);
             var a = document.createElement('a');
-            a.href = url;
-            a.download = 'screenshot_' + Date.now() + '.zip';
+            a.href = downloadUrl;
+            a.download = baseHost.replace(/[^a-zA-Z0-9.-]/g, '_') + '_clone_' + Date.now() + '.zip';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            URL.revokeObjectURL(downloadUrl);
 
-            setStatus('✅ Đã tải ZIP (' + (zipBlob.size / 1024).toFixed(1) + ' KB)', 'success');
+            setProgress(100);
+            addLog('✅ Đã tải ZIP: ' + Math.round(blob.size / 1024) + 'KB', 'ok');
+            setStatus('✅ Clone thành công! File đã tải về máy', 'success');
+
         } catch (err) {
             console.error(err);
-            setStatus('❌ Lỗi nén: ' + err.message, 'error');
+            addLog('❌ Lỗi: ' + err.message, 'err');
+            setStatus('❌ Lỗi: ' + err.message, 'error');
+            resetProgress();
         } finally {
-            btn.disabled = false;
+            $('clone-btn').disabled = false;
         }
     };
 
-    // Copy URL ảnh
-    $('copy-btn').onclick = function() {
-        if (!currentImage) return;
-
-        var url = currentImage.src;
-        try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(function() {
-                    setStatus('✅ Đã copy URL ảnh', 'success');
-                    $('copy-btn').innerHTML = '✅ ĐÃ COPY<small>URL</small>';
-                    setTimeout(function() {
-                        $('copy-btn').innerHTML = '📋 COPY URL<small>Ảnh</small>';
-                    }, 2000);
-                });
-            } else {
-                var ta = document.createElement('textarea');
-                ta.value = url;
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                setStatus('✅ Đã copy URL ảnh', 'success');
-            }
-        } catch (e) {
-            setStatus('❌ Không copy được', 'error');
-        }
-    };
-
-    // Enter để chụp
     $('url-input').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            $('capture-btn').click();
-        }
+        if (e.key === 'Enter') $('clone-btn').click();
     });
 
-    console.log('%c📸 Screenshot Tool đã sẵn sàng!', 'color: #a855f7; font-size: 14px; font-weight: bold;');
 })();
 </script>
 
