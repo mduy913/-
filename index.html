@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Deep Web Inspector & Cloner</title>
+<title>Ultimate HTML Cloner</title>
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%); color: #fff; min-height: 100vh; padding: 14px; display: flex; flex-direction: column; align-items: center; }
@@ -22,7 +22,7 @@
     .status.loading { color: #f59e0b; }
     .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,180,216,0.2); border-top-color: #00b4d8; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .log { background: rgba(0,0,0,0.5); border-radius: 10px; padding: 12px; max-height: 250px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; margin-top: 12px; display: none; }
+    .log { background: rgba(0,0,0,0.5); border-radius: 10px; padding: 12px; max-height: 200px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; margin-top: 12px; display: none; }
     .log.show { display: block; }
     .log-item { padding: 2px 0; }
     .log-item.ok { color: #22c55e; }
@@ -37,8 +37,8 @@
 <body>
 
 <div class="container">
-    <h1>🕵️ DEEP CLONER V4</h1>
-    <div class="subtitle">Quét siêu sâu - Fix 100% Lỗi Trắng Trang</div>
+    <h1>🕵️ HTML FULL CLONER</h1>
+    <div class="subtitle">Tự động Fix CSS/JS/Ảnh vào 1 File HTML</div>
 
     <div class="card">
         <div class="label">📎 NHẬP URL CẦN CLONE</div>
@@ -81,7 +81,7 @@
         $('progress-fill').style.width = p + '%';
     }
 
-    async function fetchWithTimeout(url, options = {}, timeout = 8000) {
+    async function fetchWithTimeout(url, options = {}, timeout = 10000) {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
         try {
@@ -94,7 +94,7 @@
         }
     }
 
-    // 1. Lấy HTML (Microlink)
+    // Lấy HTML đã Render qua Microlink
     async function getRenderedHtml(url) {
         addLog('📡 Đang Render JS qua Microlink...', 'info');
         var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=html&data.html.type=text';
@@ -162,7 +162,6 @@
             var imgMap = {};
             for (let u of imgUrls) {
                 try {
-                    // Dùng wsrv.nl chuyên trị ảnh
                     let res = await fetchWithTimeout('https://wsrv.nl/?url=' + encodeURIComponent(u) + '&output=webp');
                     if (res.ok) {
                         let blob = await res.blob();
@@ -174,7 +173,6 @@
                     }
                 } catch(e) { 
                     addLog('✗ Ảnh lỗi: ' + u.substring(0, 30), 'err');
-                    // Nếu không tải được, thay link ảnh trong HTML thành link wsrv
                     imgMap[u] = 'https://wsrv.nl/?url=' + encodeURIComponent(u);
                 }
                 setProgress(30 + (++k / imgUrls.size) * 50);
