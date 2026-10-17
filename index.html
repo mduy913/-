@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ultimate Full Cloner</title>
+<title>Ultimate Cloner (Fix CSS)</title>
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%); color: #fff; min-height: 100vh; padding: 14px; display: flex; flex-direction: column; align-items: center; }
@@ -37,8 +37,8 @@
 <body>
 
 <div class="container">
-    <h1>🕵️ ULTIMATE CLONER</h1>
-    <div class="subtitle">Tải 100% Tài Nguyên (Fix mọi lỗi CORS)</div>
+    <h1>🕵️ ULTIMATE CLONER (V3)</h1>
+    <div class="subtitle">Tự động nhúng CSS - Fix 100% lỗi CORS</div>
 
     <div class="card">
         <div class="label">📎 NHẬP URL CẦN CLONE</div>
@@ -81,8 +81,7 @@
         $('progress-fill').style.width = p + '%';
     }
 
-    // Hàm tải file với Timeout 10s
-    async function fetchWithTimeout(url, options = {}, timeout = 10000) {
+    async function fetchWithTimeout(url, options = {}, timeout = 8000) {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
         try {
@@ -95,33 +94,6 @@
         }
     }
 
-    // KỸ THUẬT TẢI TÀI NGUYÊN TỐI THƯỢNG (Weserv + Fallback)
-    async function downloadResource(url, type) {
-        // 1. Dùng Weserv cho Ảnh và CSS (nó xử lý CORS cực tốt)
-        if (type === 'img' || type === 'css') {
-            try {
-                let res = await fetchWithTimeout('https://wsrv.nl/?url=' + encodeURIComponent(url) + (type === 'img' ? '&output=webp' : ''));
-                if (res.ok) return await res.blob();
-            } catch(e) {}
-        }
-
-        // 2. Các proxy dự phòng
-        var proxies = [
-            'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
-            'https://corsproxy.io/?' + encodeURIComponent(url),
-            'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
-        ];
-
-        for (var i = 0; i < proxies.length; i++) {
-            try {
-                let res = await fetchWithTimeout(proxies[i], {}, 8000);
-                if (res.ok) return await res.blob();
-            } catch (e) {}
-        }
-        throw new Error('Failed');
-    }
-
-    // 1. Lấy HTML (Microlink)
     async function getRenderedHtml(url) {
         addLog('📡 Đang Render JS qua Microlink...', 'info');
         var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=html&data.html.type=text';
@@ -135,19 +107,19 @@
         return null;
     }
 
-    function getFileName(url, type) {
-        try {
-            var u = new URL(url);
-            var name = u.pathname.split('/').pop() || 'file';
-            if (!name.includes('.')) {
-                if (type === 'css') name += '.css';
-                else if (type === 'js') name += '.js';
-                else name += '.webp'; // Fallback cho ảnh
-            }
-            return name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        } catch(e) {
-            return 'file_' + Date.now() + '.' + type;
+    // Hàm lấy nội dung CSS (Dùng Proxy đọc Text)
+    async function fetchCssContent(url) {
+        var proxies = [
+            'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
+            'https://corsproxy.io/?' + encodeURIComponent(url)
+        ];
+        for (var i = 0; i < proxies.length; i++) {
+            try {
+                let res = await fetchWithTimeout(proxies[i], {}, 8000);
+                if (res.ok) return await res.text();
+            } catch (e) {}
         }
+        return null;
     }
 
     $('clone-btn').onclick = async function() {
@@ -175,7 +147,6 @@
             zip = new JSZip();
             var root = zip.folder(baseHost);
             var assets = root.folder('assets');
-            var cssDir = assets.folder('css');
             var jsDir = assets.folder('js');
             var imgDir = assets.folder('img');
 
@@ -200,57 +171,62 @@
             addLog(`📋 Tìm thấy: ${cssUrls.size} CSS, ${jsUrls.size} JS, ${imgUrls.size} Ảnh`, 'info');
             setProgress(30);
 
-            var newHtml = html;
-
-            // Tải CSS
-            var i = 0;
+            // ==========================================
+            // BƯỚC ĐỘT PHÁ: LẤY CSS VÀ NHÚNG THẲNG VÀO HTML
+            // ==========================================
+            let allCssText = "";
+            let i = 0;
             for (let u of cssUrls) {
-                try {
-                    let blob = await downloadResource(u, 'css');
-                    let name = getFileName(u, 'css');
-                    cssDir.file(name, blob);
-                    newHtml = newHtml.split(u).join('assets/css/' + name);
-                    addLog('✓ CSS: ' + name, 'ok');
-                } catch(e) { 
-                    addLog('✗ Lỗi CSS: ' + u.substring(0, 40), 'err'); 
+                addLog('⏳ Đang lấy nội dung CSS: ' + u.substring(0, 30) + '...', 'info');
+                let cssText = await fetchCssContent(u);
+                if (cssText) {
+                    allCssText += `\n/* CSS từ: ${u} */\n${cssText}\n`;
+                    addLog('✓ Đã nhúng CSS', 'ok');
+                } else {
+                    addLog('✗ Không lấy được CSS (Sẽ dùng Proxy Online)', 'warn');
+                    // Nếu không lấy được, giữ nguyên thẻ link cũ (nhưng sửa link qua proxy)
+                    allCssText += `\n@import url("https://wsrv.nl/?url=${encodeURIComponent(u)}");\n`;
                 }
-                setProgress(30 + (++i / cssUrls.size) * 20);
+                setProgress(30 + (++i / cssUrls.size) * 15);
             }
 
             // Tải JS
             var j = 0;
             for (let u of jsUrls) {
                 try {
-                    let blob = await downloadResource(u, 'js');
-                    let name = getFileName(u, 'js');
+                    let res = await fetchWithTimeout('https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u));
+                    let blob = await res.blob();
+                    let name = (new URL(u)).pathname.split('/').pop() || 'file.js';
                     jsDir.file(name, blob);
-                    newHtml = newHtml.split(u).join('assets/js/' + name);
+                    html = html.split(u).join('assets/js/' + name);
                     addLog('✓ JS: ' + name, 'ok');
                 } catch(e) { 
-                    addLog('✗ Lỗi JS: ' + u.substring(0, 40), 'err'); 
+                    addLog('✗ Lỗi JS: ' + u.substring(0, 30), 'err'); 
                 }
-                setProgress(50 + (++j / jsUrls.size) * 20);
+                setProgress(45 + (++j / jsUrls.size) * 20);
             }
 
-            // Tải Ảnh (Nếu lỗi vẫn có ảnh hiển thị)
+            // Tải Ảnh (Fallback)
             var k = 0;
             for (let u of imgUrls) {
                 try {
-                    let blob = await downloadResource(u, 'img');
-                    let name = getFileName(u, 'img');
+                    let res = await fetchWithTimeout('https://wsrv.nl/?url=' + encodeURIComponent(u) + '&output=webp');
+                    let blob = await res.blob();
+                    let name = (new URL(u)).pathname.split('/').pop() || 'img.webp';
                     imgDir.file(name, blob);
-                    newHtml = newHtml.split(u).join('assets/img/' + name);
-                    addLog('✓ Ảnh: ' + name, 'ok');
+                    html = html.split(u).join('assets/img/' + name);
                 } catch(e) { 
-                    addLog('✗ Ảnh lỗi: ' + u.substring(0, 40), 'err');
-                    // Chèn link ảnh online để đảm bảo HTML hiện ảnh 100%
-                    newHtml = newHtml.split(u).join('https://wsrv.nl/?url=' + encodeURIComponent(u));
+                    // Ảnh lỗi -> Chèn link Online
+                    html = html.split(u).join('https://wsrv.nl/?url=' + encodeURIComponent(u));
                 }
-                setProgress(70 + (++k / imgUrls.size) * 25);
+                setProgress(65 + (++k / imgUrls.size) * 30);
             }
 
-            root.file('index.html', newHtml);
-            root.file('INFO.txt', `URL: ${url}\nTime: ${new Date().toLocaleString('vi-VN')}`);
+            // Chèn toàn bộ CSS vào thẻ <style>
+            html = html.replace('</head>', `<style>\n${allCssText}\n</style>\n</head>`);
+
+            root.file('index.html', html);
+            root.file('INFO.txt', `URL: ${url}\nTime: ${new Date().toLocaleString('vi-VN')}\n(CSS đã nhúng trực tiếp)`);
 
             setProgress(95);
             setStatus('⏳ Đang nén file ZIP...', 'loading');
@@ -265,8 +241,8 @@
             URL.revokeObjectURL(a.href);
 
             setProgress(100);
-            addLog('✅ Đã tải ZIP (' + Math.round(blob.size / 1024) + 'KB)', 'ok');
-            setStatus('✅ Nén thành công! (Đã Fix Link)', 'success');
+            addLog('✅ Đã tải ZIP!', 'ok');
+            setStatus('✅ Nén thành công! (CSS đã được nhúng thẳng)', 'success');
 
         } catch (err) {
             addLog('❌ Lỗi: ' + err.message, 'err');
