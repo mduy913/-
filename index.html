@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Clone Source Web</title>
+<title>Clone Web Pro - Vượt Rào Cản</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body {
@@ -21,7 +21,7 @@ h1 {
     text-align: center;
     font-size: 24px;
     margin-bottom: 6px;
-    background: linear-gradient(135deg, #a855f7, #ec4899, #f59e0b);
+    background: linear-gradient(135deg, #00b4d8, #a855f7, #ec4899);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 900;
@@ -29,7 +29,7 @@ h1 {
 .subtitle { text-align: center; font-size: 12px; color: #888; margin-bottom: 20px; }
 .card {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(168,85,247,0.3);
+    border: 1px solid rgba(0,180,216,0.3);
     border-radius: 14px;
     padding: 16px;
     margin-bottom: 14px;
@@ -37,7 +37,7 @@ h1 {
 .label {
     font-size: 11px;
     font-weight: 800;
-    color: #a855f7;
+    color: #00b4d8;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -45,7 +45,7 @@ h1 {
 input[type="text"] {
     width: 100%;
     background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(168,85,247,0.3);
+    border: 1px solid rgba(0,180,216,0.3);
     border-radius: 10px;
     color: #fff;
     padding: 14px;
@@ -54,14 +54,11 @@ input[type="text"] {
     outline: none;
     margin-bottom: 12px;
 }
-input[type="text"]:focus {
-    border-color: #a855f7;
-    box-shadow: 0 0 15px rgba(168,85,247,0.3);
-}
+input[type="text"]:focus { border-color: #00b4d8; box-shadow: 0 0 15px rgba(0,180,216,0.3); }
 button.main-btn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #a855f7, #ec4899);
+    background: linear-gradient(135deg, #00b4d8, #a855f7);
     border: none;
     border-radius: 12px;
     color: #fff;
@@ -70,7 +67,7 @@ button.main-btn {
     cursor: pointer;
     transition: 0.2s;
 }
-button.main-btn:hover { transform: translateY(-2px); }
+button.main-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,180,216,0.3); }
 button.main-btn:disabled { opacity: 0.5; }
 .status {
     font-size: 12px;
@@ -89,8 +86,8 @@ button.main-btn:disabled { opacity: 0.5; }
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(168,85,247,0.2);
-    border-top-color: #a855f7;
+    border: 2px solid rgba(0,180,216,0.2);
+    border-top-color: #00b4d8;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin-right: 6px;
@@ -115,16 +112,6 @@ button.main-btn:disabled { opacity: 0.5; }
 .log-item.err { color: #ef4444; }
 .log-item.info { color: #00b4d8; }
 .log-item.warn { color: #f59e0b; }
-.hint {
-    background: rgba(59,130,246,0.1);
-    border: 1px solid rgba(59,130,246,0.4);
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 11px;
-    color: #93c5fd;
-    margin-bottom: 14px;
-}
-.hint b { color: #60a5fa; }
 .progress-bar {
     width: 100%;
     height: 6px;
@@ -137,7 +124,7 @@ button.main-btn:disabled { opacity: 0.5; }
 .progress-bar.show { display: block; }
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #a855f7, #ec4899);
+    background: linear-gradient(90deg, #00b4d8, #a855f7);
     width: 0%;
     transition: width 0.3s;
 }
@@ -146,31 +133,21 @@ button.main-btn:disabled { opacity: 0.5; }
 <body>
 
 <div class="container">
-    <h1>🔍 CLONE SOURCE WEB</h1>
-    <div class="subtitle">Tải toàn bộ HTML + CSS + JS + ảnh + font</div>
-
-    <div class="hint">
-        💡 <b>Cách dùng:</b><br>
-        1. Dán URL web cần clone (VD: `https://example.com`)<br>
-        2. Nhấn CLONE → đợi 10-60s<br>
-        3. Nhấn TẢI ZIP → nhận full source
-    </div>
+    <h1>🕵️ CLONE WEB PRO</h1>
+    <div class="subtitle">Vượt rào cản - Lấy HTML sau khi Render JS</div>
 
     <div class="card">
-        <div class="label">📎 NHẬP URL</div>
-        <input type="text" id="url-input" placeholder="https://example.com" />
-        <button class="main-btn" id="clone-btn">🔍 CLONE SOURCE</button>
+        <div class="label">📎 NHẬP URL WEB CẦN LẤY</div>
+        <input type="text" id="url-input" placeholder="https://shopee.vn hoặc web bảo mật..." />
+        <button class="main-btn" id="clone-btn">🚀 BẮT ĐẦU CLONE</button>
     </div>
 
     <div class="status" id="status">Sẵn sàng</div>
-
-    <div class="progress-bar" id="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-    </div>
-
+    <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="log" id="log"></div>
-
-    <button class="main-btn" id="download-btn" style="display:none; margin-top:12px;">📥 TẢI ZIP</button>
+    
+    <button class="main-btn" id="download-html-btn" style="display:none; margin-top:12px; background: linear-gradient(135deg, #22c55e, #16a34a);">📥 TẢI HTML RENDERED</button>
+    <button class="main-btn" id="download-zip-btn" style="display:none; margin-top:12px;">📦 TẢI FULL ZIP (NẾU CÓ)</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -179,9 +156,9 @@ button.main-btn:disabled { opacity: 0.5; }
     'use strict';
 
     var $ = function(id) { return document.getElementById(id); };
+    var currentHtml = '';
+    var currentUrl = '';
     var zip = null;
-    var baseUrl = '';
-    var baseHost = '';
 
     function setStatus(text, type) {
         var el = $('status');
@@ -199,278 +176,121 @@ button.main-btn:disabled { opacity: 0.5; }
         log.scrollTop = log.scrollHeight;
     }
 
-    function clearLog() {
-        $('log').innerHTML = '';
-        $('log').classList.remove('show');
-    }
-
-    function setProgress(percent) {
+    function setProgress(p) {
         $('progress-bar').classList.add('show');
-        $('progress-fill').style.width = percent + '%';
+        $('progress-fill').style.width = p + '%';
     }
 
-    function resetProgress() {
-        $('progress-bar').classList.remove('show');
-        $('progress-fill').style.width = '0%';
-    }
-
-    // ============ PROXY FETCH ============
-    function proxyFetch(url, type) {
-        // Dùng 3 proxy fallback
-        var proxies = [
-            function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); },
-            function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
-            function(u) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
-        ];
-
-        return new Promise(function(resolve, reject) {
-            var attempts = 0;
-
-            function tryNext() {
-                if (attempts >= proxies.length) {
-                    reject(new Error('Tất cả proxy đều lỗi'));
-                    return;
-                }
-
-                var proxyUrl = proxies[attempts](url);
-                attempts++;
-
-                fetch(proxyUrl)
-                    .then(function(r) {
-                        if (!r.ok) throw new Error('HTTP ' + r.status);
-                        return type === 'text' ? r.text() : r.blob();
-                    })
-                    .then(resolve)
-                    .catch(function(err) {
-                        addLog('Proxy ' + attempts + ' lỗi: ' + err.message, 'warn');
-                        tryNext();
-                    });
-            }
-
-            tryNext();
-        });
-    }
-
-    // ============ DOWNLOAD FILE ============
-    function getFileName(url, type) {
+    // Kỹ thuật 1: Dùng Microlink API lấy code sau khi Render JS
+    async function fetchViaMicrolink(url) {
+        addLog('📡 Đang gọi Microlink (Render JS)...', 'info');
+        var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=body&data.html.type=text';
         try {
-            var u = new URL(url);
-            var path = u.pathname;
-            var name = path.split('/').pop() || 'file';
-            if (!name.includes('.')) {
-                if (type === 'css') name += '.css';
-                else if (type === 'js') name += '.js';
-                else name += '.bin';
+            var res = await fetch(api);
+            var json = await res.json();
+            if (json.status === 'success' && json.data && json.data.html) {
+                return json.data.html;
             }
-            return name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        } catch(e) {
-            return 'file_' + Date.now() + '.' + type;
+        } catch (e) {
+            addLog('Microlink lỗi: ' + e.message, 'warn');
         }
+        return null;
     }
 
-    async function downloadResource(url, folder, type) {
+    // Kỹ thuật 2: Dùng Jina AI Reader (Vượt Cloudflare, trả về Text/Markdown)
+    async function fetchViaJina(url) {
+        addLog('📡 Đang gọi Jina AI Reader...', 'info');
+        var api = 'https://r.jina.ai/' + url;
         try {
-            addLog('⬇ ' + url.substring(0, 80), 'info');
-            var blob = await proxyFetch(url, 'blob');
-            var name = getFileName(url, type);
-            folder.file(name, blob);
-            addLog('✓ ' + name + ' (' + Math.round(blob.size / 1024) + 'KB)', 'ok');
-            return { url: url, name: name, ok: true };
-        } catch(err) {
-            addLog('✗ Lỗi: ' + url.substring(0, 60), 'err');
-            return { url: url, name: null, ok: false };
+            var res = await fetch(api);
+            var text = await res.text();
+            if (text && text.length > 100) {
+                return text;
+            }
+        } catch (e) {
+            addLog('Jina lỗi: ' + e.message, 'warn');
         }
+        return null;
     }
 
-    // ============ CLONE ============
+    // Kỹ thuật 3: Dùng Codetabs Proxy (Render cơ bản)
+    async function fetchViaCodetabs(url) {
+        addLog('📡 Đang gọi Codetabs Proxy...', 'info');
+        var api = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url);
+        try {
+            var res = await fetch(api);
+            var text = await res.text();
+            if (text && text.length > 100) {
+                return text;
+            }
+        } catch (e) {
+            addLog('Codetabs lỗi: ' + e.message, 'warn');
+        }
+        return null;
+    }
+
     $('clone-btn').onclick = async function() {
         var url = $('url-input').value.trim();
         if (!url) { setStatus('❌ Chưa nhập URL!', 'error'); return; }
         if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 
+        currentUrl = url;
         $('clone-btn').disabled = true;
-        $('download-btn').style.display = 'none';
-        clearLog();
-        setProgress(5);
-        setStatus('⏳ Đang lấy HTML chính...', 'loading');
+        $('download-html-btn').style.display = 'none';
+        $('download-zip-btn').style.display = 'none';
+        $('log').innerHTML = '';
+        setStatus('⏳ Đang xử lý...', 'loading');
+        setProgress(10);
 
         try {
-            var urlObj = new URL(url);
-            baseUrl = urlObj.origin + urlObj.pathname;
-            baseHost = urlObj.hostname;
-
-            addLog('🌐 URL gốc: ' + url, 'info');
-
-            // 1. Lấy HTML chính
-            var html = await proxyFetch(url, 'text');
-            addLog('✓ HTML: ' + Math.round(html.length / 1024) + 'KB', 'ok');
-
-            setProgress(20);
-            setStatus('⏳ Đang parse HTML...', 'loading');
-
-            // 2. Parse HTML
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'text/html');
-
-            // 3. Tạo ZIP
-            zip = new JSZip();
-            var rootFolder = zip.folder(baseHost);
-            var assetsFolder = rootFolder.folder('assets');
-            var cssFolder = assetsFolder.folder('css');
-            var jsFolder = assetsFolder.folder('js');
-            var imgFolder = assetsFolder.folder('img');
-            var fontFolder = assetsFolder.folder('fonts');
-
-            // Lưu HTML gốc
-            rootFolder.file('index.html', html);
-
-            // 4. Thu thập CSS
-            var cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
-            var cssUrls = [];
-            cssLinks.forEach(function(link) {
-                var href = link.href || link.getAttribute('href');
-                if (href) {
-                    try {
-                        var absolute = new URL(href, url).href;
-                        if (!cssUrls.includes(absolute)) cssUrls.push(absolute);
-                    } catch(e) {}
-                }
-            });
-            addLog('📋 CSS links: ' + cssUrls.length, 'info');
-
-            // 5. Thu thập JS
-            var jsLinks = doc.querySelectorAll('script[src]');
-            var jsUrls = [];
-            jsLinks.forEach(function(s) {
-                var src = s.src || s.getAttribute('src');
-                if (src) {
-                    try {
-                        var absolute = new URL(src, url).href;
-                        if (!jsUrls.includes(absolute)) jsUrls.push(absolute);
-                    } catch(e) {}
-                }
-            });
-            addLog('📋 JS links: ' + jsUrls.length, 'info');
-
-            // 6. Thu thập ảnh
-            var imgUrls = [];
-            doc.querySelectorAll('img[src]').forEach(function(img) {
-                try {
-                    var absolute = new URL(img.src, url).href;
-                    if (!imgUrls.includes(absolute)) imgUrls.push(absolute);
-                } catch(e) {}
-            });
-            doc.querySelectorAll('img[data-src]').forEach(function(img) {
-                try {
-                    var absolute = new URL(img.getAttribute('data-src'), url).href;
-                    if (!imgUrls.includes(absolute)) imgUrls.push(absolute);
-                } catch(e) {}
-            });
-            addLog('📋 Ảnh: ' + imgUrls.length, 'info');
-
-            // 7. Download CSS
+            // Thử Microlink trước
             setProgress(30);
-            setStatus('⏳ Đang tải CSS...', 'loading');
-            var cssMap = {};
-            for (var i = 0; i < cssUrls.length; i++) {
-                var result = await downloadResource(cssUrls[i], cssFolder, 'css');
-                if (result.ok) cssMap[cssUrls[i]] = 'assets/css/' + result.name;
-                setProgress(30 + (i + 1) / cssUrls.length * 15);
+            var html = await fetchViaMicrolink(url);
+
+            // Nếu Microlink fail, thử Jina
+            if (!html) {
+                setProgress(50);
+                html = await fetchViaJina(url);
             }
 
-            // 8. Download JS
-            setStatus('⏳ Đang tải JS...', 'loading');
-            var jsMap = {};
-            for (var j = 0; j < jsUrls.length; j++) {
-                var result = await downloadResource(jsUrls[j], jsFolder, 'js');
-                if (result.ok) jsMap[jsUrls[j]] = 'assets/js/' + result.name;
-                setProgress(45 + (j + 1) / jsUrls.length * 15);
+            // Nếu Jina fail, thử Codetabs
+            if (!html) {
+                setProgress(70);
+                html = await fetchViaCodetabs(url);
             }
 
-            // 9. Download ảnh
-            setStatus('⏳ Đang tải ảnh...', 'loading');
-            var imgMap = {};
-            for (var k = 0; k < imgUrls.length; k++) {
-                var result = await downloadResource(imgUrls[k], imgFolder, 'img');
-                if (result.ok) imgMap[imgUrls[k]] = 'assets/img/' + result.name;
-                setProgress(60 + (k + 1) / imgUrls.length * 30);
+            if (!html) {
+                throw new Error('Cả 3 kỹ thuật đều bị chặn. Web này bảo mật quá cao!');
             }
 
-            // 10. Sửa đường dẫn trong HTML
-            setStatus('⏳ Đang sửa đường dẫn...', 'loading');
-            addLog('🔧 Đang sửa link trong HTML...', 'info');
-
-            var newHtml = html;
-            // Thay CSS
-            Object.keys(cssMap).forEach(function(oldUrl) {
-                newHtml = newHtml.split(oldUrl).join(cssMap[oldUrl]);
-            });
-            // Thay JS
-            Object.keys(jsMap).forEach(function(oldUrl) {
-                newHtml = newHtml.split(oldUrl).join(jsMap[oldUrl]);
-            });
-            // Thay ảnh
-            Object.keys(imgMap).forEach(function(oldUrl) {
-                newHtml = newHtml.split(oldUrl).join(imgMap[oldUrl]);
-            });
-
-            // Ghi đè index.html
-            rootFolder.file('index.html', newHtml);
-
-            // Tạo file info
-            rootFolder.file('INFO.txt', [
-                'URL gốc: ' + url,
-                'Thời gian clone: ' + new Date().toLocaleString('vi-VN'),
-                'CSS đã tải: ' + Object.keys(cssMap).length + '/' + cssUrls.length,
-                'JS đã tải: ' + Object.keys(jsMap).length + '/' + jsUrls.length,
-                'Ảnh đã tải: ' + Object.keys(imgMap).length + '/' + imgUrls.length,
-                '',
-                'Lưu ý:',
-                '- Mở index.html để xem web',
-                '- Một số tài nguyên CDN có thể không tải được (CORS)',
-                '- Font Google có thể bị thiếu',
-                '- Nếu cần, thay CDN trong CSS/HTML'
-            ].join('\n'));
-
-            setProgress(95);
-            setStatus('⏳ Đang nén ZIP...', 'loading');
-
-            // 11. Tạo ZIP
-            var blob = await zip.generateAsync({
-                type: 'blob',
-                compression: 'DEFLATE',
-                compressionOptions: { level: 6 }
-            }, function(meta) {
-                setProgress(95 + meta.percent / 20);
-            });
-
-            // 12. Tải về
-            var downloadUrl = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = downloadUrl;
-            a.download = baseHost.replace(/[^a-zA-Z0-9.-]/g, '_') + '_clone_' + Date.now() + '.zip';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(downloadUrl);
-
+            currentHtml = html;
             setProgress(100);
-            addLog('✅ Đã tải ZIP: ' + Math.round(blob.size / 1024) + 'KB', 'ok');
-            setStatus('✅ Clone thành công! File đã tải về máy', 'success');
+            addLog('✅ Lấy thành công! Kích thước: ' + Math.round(html.length / 1024) + 'KB', 'ok');
+            setStatus('✅ Đã lấy được Source Code!', 'success');
+
+            // Hiển thị nút tải
+            $('download-html-btn').style.display = 'block';
 
         } catch (err) {
-            console.error(err);
-            addLog('❌ Lỗi: ' + err.message, 'err');
-            setStatus('❌ Lỗi: ' + err.message, 'error');
-            resetProgress();
+            addLog('❌ Thất bại: ' + err.message, 'err');
+            setStatus('❌ ' + err.message, 'error');
         } finally {
             $('clone-btn').disabled = false;
         }
     };
 
-    $('url-input').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') $('clone-btn').click();
-    });
+    $('download-html-btn').onclick = function() {
+        if (!currentHtml) return;
+        var blob = new Blob([currentHtml], { type: 'text/html;charset=utf-8' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'source_' + new URL(currentUrl).hostname + '.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        setStatus('✅ Đã tải file HTML!', 'success');
+    };
 
 })();
 </script>
