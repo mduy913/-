@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Clone Web Pro - Vượt Rào Cản</title>
+<title>Clone Web All-in-One (Render + Zip)</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body {
@@ -17,137 +17,47 @@ body {
     align-items: center;
 }
 .container { max-width: 700px; width: 100%; }
-h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 6px;
-    background: linear-gradient(135deg, #00b4d8, #a855f7, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 900;
-}
+h1 { text-align: center; font-size: 22px; margin-bottom: 6px; background: linear-gradient(135deg, #00b4d8, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
 .subtitle { text-align: center; font-size: 12px; color: #888; margin-bottom: 20px; }
-.card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(0,180,216,0.3);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 14px;
-}
-.label {
-    font-size: 11px;
-    font-weight: 800;
-    color: #00b4d8;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-input[type="text"] {
-    width: 100%;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(0,180,216,0.3);
-    border-radius: 10px;
-    color: #fff;
-    padding: 14px;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    margin-bottom: 12px;
-}
+.card { background: rgba(255,255,255,0.03); border: 1px solid rgba(0,180,216,0.3); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+.label { font-size: 11px; font-weight: 800; color: #00b4d8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+input[type="text"] { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,180,216,0.3); border-radius: 10px; color: #fff; padding: 14px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 12px; }
 input[type="text"]:focus { border-color: #00b4d8; box-shadow: 0 0 15px rgba(0,180,216,0.3); }
-button.main-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #00b4d8, #a855f7);
-    border: none;
-    border-radius: 12px;
-    color: #fff;
-    font-weight: 800;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-button.main-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,180,216,0.3); }
+button.main-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00b4d8, #a855f7); border: none; border-radius: 12px; color: #fff; font-weight: 800; font-size: 14px; cursor: pointer; transition: 0.2s; }
+button.main-btn:hover { transform: translateY(-2px); }
 button.main-btn:disabled { opacity: 0.5; }
-.status {
-    font-size: 12px;
-    text-align: center;
-    padding: 12px;
-    color: #22c55e;
-    min-height: 40px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    margin-top: 12px;
-    line-height: 1.6;
-}
+.status { font-size: 12px; text-align: center; padding: 12px; color: #22c55e; min-height: 40px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-top: 12px; line-height: 1.6; }
 .status.error { color: #ef4444; }
 .status.loading { color: #f59e0b; }
-.spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(0,180,216,0.2);
-    border-top-color: #00b4d8;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-right: 6px;
-    vertical-align: middle;
-}
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,180,216,0.2); border-top-color: #00b4d8; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.log {
-    background: rgba(0,0,0,0.5);
-    border-radius: 10px;
-    padding: 12px;
-    max-height: 300px;
-    overflow-y: auto;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    line-height: 1.6;
-    margin-top: 12px;
-    display: none;
-}
+.log { background: rgba(0,0,0,0.5); border-radius: 10px; padding: 12px; max-height: 250px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; margin-top: 12px; display: none; }
 .log.show { display: block; }
 .log-item { padding: 2px 0; }
 .log-item.ok { color: #22c55e; }
 .log-item.err { color: #ef4444; }
 .log-item.info { color: #00b4d8; }
 .log-item.warn { color: #f59e0b; }
-.progress-bar {
-    width: 100%;
-    height: 6px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-top: 12px;
-    display: none;
-}
+.progress-bar { width: 100%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; margin-top: 12px; display: none; }
 .progress-bar.show { display: block; }
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #00b4d8, #a855f7);
-    width: 0%;
-    transition: width 0.3s;
-}
+.progress-fill { height: 100%; background: linear-gradient(90deg, #00b4d8, #a855f7); width: 0%; transition: width 0.3s; }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🕵️ CLONE WEB PRO</h1>
-    <div class="subtitle">Vượt rào cản - Lấy HTML sau khi Render JS</div>
+    <h1>🕵️ CLONE FULL ZIP (PRO)</h1>
+    <div class="subtitle">Render JS → Tải CSS/JS/Ảnh → Nén ZIP</div>
 
     <div class="card">
-        <div class="label">📎 NHẬP URL WEB CẦN LẤY</div>
-        <input type="text" id="url-input" placeholder="https://shopee.vn hoặc web bảo mật..." />
+        <div class="label">📎 NHẬP URL</div>
+        <input type="text" id="url-input" placeholder="https://example.com" />
         <button class="main-btn" id="clone-btn">🚀 BẮT ĐẦU CLONE</button>
     </div>
 
     <div class="status" id="status">Sẵn sàng</div>
     <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="log" id="log"></div>
-    
-    <button class="main-btn" id="download-html-btn" style="display:none; margin-top:12px; background: linear-gradient(135deg, #22c55e, #16a34a);">📥 TẢI HTML RENDERED</button>
-    <button class="main-btn" id="download-zip-btn" style="display:none; margin-top:12px;">📦 TẢI FULL ZIP (NẾU CÓ)</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -156,9 +66,8 @@ button.main-btn:disabled { opacity: 0.5; }
     'use strict';
 
     var $ = function(id) { return document.getElementById(id); };
-    var currentHtml = '';
-    var currentUrl = '';
     var zip = null;
+    var baseHost = '';
 
     function setStatus(text, type) {
         var el = $('status');
@@ -181,119 +90,219 @@ button.main-btn:disabled { opacity: 0.5; }
         $('progress-fill').style.width = p + '%';
     }
 
-    // Kỹ thuật 1: Dùng Microlink API lấy code sau khi Render JS
-    async function fetchViaMicrolink(url) {
-        addLog('📡 Đang gọi Microlink (Render JS)...', 'info');
-        var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=body&data.html.type=text';
+    // Lấy HTML đã Render qua Microlink
+    async function getRenderedHtml(url) {
+        addLog('📡 Đang Render JS qua Microlink...', 'info');
+        var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=html&data.html.type=text';
         try {
             var res = await fetch(api);
             var json = await res.json();
             if (json.status === 'success' && json.data && json.data.html) {
                 return json.data.html;
             }
-        } catch (e) {
-            addLog('Microlink lỗi: ' + e.message, 'warn');
-        }
+        } catch (e) { addLog('Microlink lỗi: ' + e.message, 'warn'); }
         return null;
     }
 
-    // Kỹ thuật 2: Dùng Jina AI Reader (Vượt Cloudflare, trả về Text/Markdown)
-    async function fetchViaJina(url) {
-        addLog('📡 Đang gọi Jina AI Reader...', 'info');
-        var api = 'https://r.jina.ai/' + url;
-        try {
-            var res = await fetch(api);
-            var text = await res.text();
-            if (text && text.length > 100) {
-                return text;
-            }
-        } catch (e) {
-            addLog('Jina lỗi: ' + e.message, 'warn');
+    // Tải file qua Proxy (tự động thử 3 proxy)
+    async function downloadResource(url, type) {
+        var proxies = [
+            function(u) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); },
+            function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); },
+            function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+        ];
+
+        for (var i = 0; i < proxies.length; i++) {
+            try {
+                var res = await fetch(proxies[i](url));
+                if (res.ok) return await res.blob();
+            } catch (e) { /* thử proxy tiếp theo */ }
         }
-        return null;
+        throw new Error('Failed');
     }
 
-    // Kỹ thuật 3: Dùng Codetabs Proxy (Render cơ bản)
-    async function fetchViaCodetabs(url) {
-        addLog('📡 Đang gọi Codetabs Proxy...', 'info');
-        var api = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url);
+    function getFileName(url, type) {
         try {
-            var res = await fetch(api);
-            var text = await res.text();
-            if (text && text.length > 100) {
-                return text;
+            var u = new URL(url);
+            var name = u.pathname.split('/').pop() || 'file';
+            if (!name.includes('.')) {
+                if (type === 'css') name += '.css';
+                else if (type === 'js') name += '.js';
+                else name += '.bin';
             }
-        } catch (e) {
-            addLog('Codetabs lỗi: ' + e.message, 'warn');
+            return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        } catch(e) {
+            return 'file_' + Date.now() + '.' + type;
         }
-        return null;
     }
 
     $('clone-btn').onclick = async function() {
         var url = $('url-input').value.trim();
-        if (!url) { setStatus('❌ Chưa nhập URL!', 'error'); return; }
+        if (!url) return setStatus('❌ Chưa nhập URL!', 'error');
         if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 
-        currentUrl = url;
         $('clone-btn').disabled = true;
-        $('download-html-btn').style.display = 'none';
-        $('download-zip-btn').style.display = 'none';
         $('log').innerHTML = '';
-        setStatus('⏳ Đang xử lý...', 'loading');
+        setStatus('⏳ Đang lấy HTML Render...', 'loading');
         setProgress(10);
 
         try {
-            // Thử Microlink trước
+            var urlObj = new URL(url);
+            baseHost = urlObj.hostname;
+
+            // 1. Lấy HTML đã render
+            var html = await getRenderedHtml(url);
+            if (!html) throw new Error('Không thể Render HTML (Web chặn hoặc lỗi API)');
+            addLog('✓ HTML Render: ' + Math.round(html.length / 1024) + 'KB', 'ok');
             setProgress(30);
-            var html = await fetchViaMicrolink(url);
 
-            // Nếu Microlink fail, thử Jina
-            if (!html) {
-                setProgress(50);
-                html = await fetchViaJina(url);
+            // 2. Parse HTML
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            
+            zip = new JSZip();
+            var root = zip.folder(baseHost);
+            var assets = root.folder('assets');
+            var cssDir = assets.folder('css');
+            var jsDir = assets.folder('js');
+            var imgDir = assets.folder('img');
+
+            root.file('index.html', html); // Lưu tạm HTML gốc
+
+            // 3. Thu thập Link
+            var cssUrls = new Set();
+            doc.querySelectorAll('link[rel="stylesheet"]').forEach(el => {
+                try { cssUrls.add(new URL(el.getAttribute('href'), url).href); } catch(e){}
+            });
+            doc.querySelectorAll('style').forEach(el => {
+                if (el.textContent.includes('@import')) {
+                    let matches = el.textContent.match(/@import\s+(?:url\()?['"]?([^'")]+)['"]?\)?/g) || [];
+                    matches.forEach(m => {
+                        let u = m.replace(/@import\s+(?:url\()?['"]?/, '').replace(/['"]?\)?/, '');
+                        try { cssUrls.add(new URL(u, url).href); } catch(e){}
+                    });
+                }
+            });
+
+            var jsUrls = new Set();
+            doc.querySelectorAll('script[src]').forEach(el => {
+                try { jsUrls.add(new URL(el.getAttribute('src'), url).href); } catch(e){}
+            });
+
+            var imgUrls = new Set();
+            doc.querySelectorAll('img').forEach(el => {
+                ['src', 'data-src', 'data-original', 'srcset'].forEach(attr => {
+                    let val = el.getAttribute(attr);
+                    if (val && !val.startsWith('data:')) {
+                        let realUrl = val.split(' ')[0];
+                        try { imgUrls.add(new URL(realUrl, url).href); } catch(e){}
+                    }
+                });
+            });
+            doc.querySelectorAll('[style*="background"]').forEach(el => {
+                let style = el.getAttribute('style');
+                let matches = style.match(/url\(['"]?([^'")]+)['"]?\)/g) || [];
+                matches.forEach(m => {
+                    let u = m.replace(/url\(['"]?/, '').replace(/['"]?\)/, '');
+                    if (!u.startsWith('data:')) {
+                        try { imgUrls.add(new URL(u, url).href); } catch(e){}
+                    }
+                });
+            });
+
+            addLog(`📋 Tìm thấy: ${cssUrls.size} CSS, ${jsUrls.size} JS, ${imgUrls.size} Ảnh`, 'info');
+            setProgress(40);
+
+            // 4. Tải CSS
+            var cssMap = {}; var i = 0;
+            for (let u of cssUrls) {
+                addLog('⬇ CSS: ' + u.substring(0, 50), 'info');
+                try {
+                    let blob = await downloadResource(u);
+                    let name = getFileName(u, 'css');
+                    cssDir.file(name, blob);
+                    cssMap[u] = 'assets/css/' + name;
+                    addLog('✓ ' + name, 'ok');
+                } catch(e) { addLog('✗ Lỗi CSS: ' + u.substring(0, 50), 'err'); }
+                setProgress(40 + (++i / cssUrls.size) * 15);
             }
 
-            // Nếu Jina fail, thử Codetabs
-            if (!html) {
-                setProgress(70);
-                html = await fetchViaCodetabs(url);
+            // 5. Tải JS
+            var jsMap = {}; var j = 0;
+            for (let u of jsUrls) {
+                addLog('⬇ JS: ' + u.substring(0, 50), 'info');
+                try {
+                    let blob = await downloadResource(u);
+                    let name = getFileName(u, 'js');
+                    jsDir.file(name, blob);
+                    jsMap[u] = 'assets/js/' + name;
+                    addLog('✓ ' + name, 'ok');
+                } catch(e) { addLog('✗ Lỗi JS: ' + u.substring(0, 50), 'err'); }
+                setProgress(55 + (++j / jsUrls.size) * 15);
             }
 
-            if (!html) {
-                throw new Error('Cả 3 kỹ thuật đều bị chặn. Web này bảo mật quá cao!');
+            // 6. Tải Ảnh
+            var imgMap = {}; var k = 0;
+            for (let u of imgUrls) {
+                if (u.length > 200) continue; // Bỏ qua ảnh base64 nhúng
+                addLog('⬇ Ảnh: ' + u.substring(0, 50), 'info');
+                try {
+                    let blob = await downloadResource(u);
+                    let name = getFileName(u, 'img');
+                    imgDir.file(name, blob);
+                    imgMap[u] = 'assets/img/' + name;
+                    addLog('✓ ' + name, 'ok');
+                } catch(e) { addLog('✗ Lỗi Ảnh: ' + u.substring(0, 50), 'err'); }
+                setProgress(70 + (++k / imgUrls.size) * 25);
             }
 
-            currentHtml = html;
+            // 7. Thay thế Link trong HTML
+            setStatus('⏳ Đang sửa đường dẫn...', 'loading');
+            addLog('🔧 Đang sửa link trong HTML...', 'info');
+            var newHtml = html;
+            
+            Object.keys(cssMap).forEach(oldUrl => { newHtml = newHtml.split(oldUrl).join(cssMap[oldUrl]); });
+            Object.keys(jsMap).forEach(oldUrl => { newHtml = newHtml.split(oldUrl).join(jsMap[oldUrl]); });
+            Object.keys(imgMap).forEach(oldUrl => { newHtml = newHtml.split(oldUrl).join(imgMap[oldUrl]); });
+
+            root.file('index.html', newHtml);
+            
+            root.file('INFO.txt', [
+                'URL: ' + url,
+                'Time: ' + new Date().toLocaleString('vi-VN'),
+                'CSS: ' + Object.keys(cssMap).length + '/' + cssUrls.size,
+                'JS: ' + Object.keys(jsMap).length + '/' + jsUrls.size,
+                'Ảnh: ' + Object.keys(imgMap).length + '/' + imgUrls.size
+            ].join('\n'));
+
+            // 8. Nén ZIP
+            setProgress(95);
+            setStatus('⏳ Đang nén file ZIP...', 'loading');
+            var blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+
+            // 9. Tải về
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = baseHost.replace(/[^a-zA-Z0-9.-]/g, '_') + '_full.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+
             setProgress(100);
-            addLog('✅ Lấy thành công! Kích thước: ' + Math.round(html.length / 1024) + 'KB', 'ok');
-            setStatus('✅ Đã lấy được Source Code!', 'success');
-
-            // Hiển thị nút tải
-            $('download-html-btn').style.display = 'block';
+            addLog('✅ Đã tải ZIP (' + Math.round(blob.size / 1024) + 'KB)', 'ok');
+            setStatus('✅ Nén thành công! File ZIP đã tải về.', 'success');
 
         } catch (err) {
-            addLog('❌ Thất bại: ' + err.message, 'err');
+            addLog('❌ Lỗi: ' + err.message, 'err');
             setStatus('❌ ' + err.message, 'error');
+            setProgress(0);
         } finally {
             $('clone-btn').disabled = false;
         }
     };
 
-    $('download-html-btn').onclick = function() {
-        if (!currentHtml) return;
-        var blob = new Blob([currentHtml], { type: 'text/html;charset=utf-8' });
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'source_' + new URL(currentUrl).hostname + '.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(a.href);
-        setStatus('✅ Đã tải file HTML!', 'success');
-    };
-
 })();
 </script>
-
 </body>
 </html>
