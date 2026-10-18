@@ -1,182 +1,370 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0a0b10">
 <title>MDUY MODZ - Access</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-    :root {
-        --bg: #0a0b10;
-        --cyan: #00e5ff;
-        --text-sub: #8b92a5;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Chakra Petch', sans-serif; }
-    body { background-color: var(--bg); color: #fff; height: 100vh; overflow: hidden; }
+:root {
+    --bg: #0a0b10;
+    --cyan: #00e5ff;
+    --sub: #8b92a5;
+    --red: #ff4b4b;
+}
 
-    /* KHUNG CHỨA WEB TROLLMODZ (BỊ ẨN ĐI) */
-    #trollmodz-container {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        z-index: 1;
-        display: none;
-        background: #000;
-    }
-    #trollmodz-container iframe {
-        width: 100%; height: 100%; border: none;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Chakra Petch', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
 
-    /* LỚP VỎ MDUY ĐÈ LÊN */
-    #mduy-overlay {
-        position: absolute; top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background-color: var(--bg);
-        z-index: 10;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        padding: 20px; transition: opacity 0.4s ease;
-    }
+body {
+    background: var(--bg);
+    color: white;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-x: hidden;
+}
 
-    .lang-btn {
-        position: absolute; top: 20px; right: 20px;
-        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-        color: var(--text-sub); padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;
-    }
+body::before {
+    content: "";
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00e5ff12;
+    filter: blur(90px);
+    pointer-events: none;
+}
 
-    .logo-container { margin-bottom: 40px; text-align: center; }
-    .logo-text { font-size: 48px; font-weight: 700; font-style: italic; color: #fff; text-shadow: 0 0 20px var(--cyan); line-height: 1; margin-bottom: 5px; }
-    .logo-sub { font-size: 20px; color: var(--cyan); font-style: normal; text-shadow: none; letter-spacing: 4px; }
-    
-    .slogan { font-size: 11px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 60px; text-align: center; }
-    
-    .input-group { width: 100%; max-width: 400px; margin-bottom: 20px; }
-    .input-label { font-size: 12px; font-weight: 600; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-    .input-label::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--cyan); }
+.container {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+    animation: appear .5s ease;
+}
 
-    .key-input-wrapper {
-        display: flex; background: #11131a; border: 1px solid var(--cyan); border-radius: 4px; overflow: hidden; box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
-    }
-    .key-input-wrapper input {
-        flex: 1; background: transparent; border: none; color: #fff; padding: 18px 15px; font-size: 16px; font-weight: 600; letter-spacing: 2px; outline: none; text-transform: uppercase;
-    }
-    .paste-btn { background: #1a1c23; border: none; border-left: 1px solid #333; color: #fff; padding: 0 25px; font-size: 13px; font-weight: 600; cursor: pointer; }
+@keyframes appear {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    .unlock-btn {
-        width: 100%; max-width: 400px; background: var(--cyan); color: #000; border: none; padding: 20px; border-radius: 4px; font-size: 22px; font-weight: 700; text-transform: uppercase; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); cursor: pointer; margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); transition: 0.2s;
-    }
-    .unlock-btn:active { transform: scale(0.97); }
+.lang-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 12px;
+    color: var(--sub);
+    background: #ffffff08;
+    border: 1px solid #ffffff20;
+    border-radius: 4px;
+    font-size: 12px;
+}
 
-    .footer-text { font-size: 14px; color: var(--text-sub); text-align: center; line-height: 1.8; }
-    
-    .loading-text { display: none; color: var(--cyan); font-size: 12px; margin-top: 10px; text-align: center; font-weight: bold; }
-    
-    @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-8px); } 50% { transform: translateX(8px); } 75% { transform: translateX(-8px); } 100% { transform: translateX(0); } }
-    .error-shake { animation: shake 0.4s; border-color: #ff4b4b !important; box-shadow: 0 0 15px rgba(255, 75, 75, 0.4) !important; }
+.logo-container {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo-text {
+    font-size: 54px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    text-shadow: 0 0 25px #00e5ff70;
+}
+
+.logo-sub {
+    display: block;
+    margin-top: 8px;
+    color: var(--cyan);
+    font-size: 22px;
+    letter-spacing: 7px;
+}
+
+.slogan {
+    color: var(--sub);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-label {
+    display: block;
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.input-label::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+    margin-right: 8px;
+}
+
+.key-wrapper {
+    display: flex;
+    width: 100%;
+    background: #11131a;
+    border: 1px solid #00e5ff88;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.key-wrapper:focus-within {
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px #00e5ff20;
+}
+
+.key-wrapper input {
+    flex: 1;
+    min-width: 0;
+    width: 0;
+    padding: 18px 12px;
+    background: transparent;
+    border: 0;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.key-wrapper input::placeholder {
+    color: #596174;
+    font-size: 11px;
+}
+
+.paste-btn {
+    flex-shrink: 0;
+    padding: 0 16px;
+    color: white;
+    background: #1a1c23;
+    border: 0;
+    border-left: 1px solid #333;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.unlock-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    margin-bottom: 16px;
+    background: var(--cyan);
+    color: #000;
+    border: 0;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    clip-path: polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.unlock-btn:active {
+    opacity: .8;
+}
+
+.unlock-btn:disabled {
+    opacity: .6;
+}
+
+.status {
+    min-height: 20px;
+    margin-bottom: 16px;
+    color: var(--cyan);
+    font-size: 12px;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.status.error {
+    color: var(--red);
+}
+
+.footer {
+    color: var(--sub);
+    font-size: 12px;
+    line-height: 2;
+    text-align: center;
+}
+
+.note {
+    margin-top: 24px;
+    padding: 12px;
+    color: #737c90;
+    font-size: 10px;
+    line-height: 1.8;
+    text-align: center;
+    border: 1px solid #ffffff12;
+    border-radius: 4px;
+}
+
+@media (max-height: 600px) {
+    body { align-items: flex-start; }
+    .container { margin: 30px 0; }
+    .slogan { margin-bottom: 24px; }
+}
 </style>
 </head>
-<body>
 
-    <!-- KHUNG WEB THẬT (TROLLMODZ) BỊ ẨN -->
-    <div id="trollmodz-container">
-        <!-- Nhúng web Trollmodz, tự động truyền key qua URL (nếu web hỗ trợ) -->
-        <iframe id="trollmodz-iframe" src="about:blank" allow="fullscreen"></iframe>
+<body>
+<main class="container">
+
+    <button class="lang-btn" type="button">🌐 EN</button>
+
+    <header class="logo-container">
+        <div class="logo-text">
+            MDUY
+            <span class="logo-sub">MODZ</span>
+        </div>
+    </header>
+
+    <div class="slogan">
+        NO ACCOUNT. NO PASSWORD. JUST YOUR KEY.
     </div>
 
-    <!-- LỚP VỎ MDUY -->
-    <div id="mduy-overlay">
-        <button class="lang-btn">🌐 EN</button>
-
-        <div class="logo-container">
-            <div class="logo-text">MDUY<br><span class="logo-sub">MODZ</span></div>
-        </div>
-
-        <div class="slogan">NO ACCOUNT. NO PASSWORD. JUST YOUR KEY.</div>
-
+    <form id="access-form">
         <div class="input-group">
-            <div class="input-label">ACCESS KEY</div>
-            <div class="key-input-wrapper" id="input-wrapper">
-                <input type="text" id="key-input" placeholder="TRLL-XXXX-XXXX-XXXX">
-                <button class="paste-btn" id="paste-btn">PASTE</button>
+            <label class="input-label" for="key-input">
+                ACCESS KEY
+            </label>
+
+            <div class="key-wrapper">
+                <input
+                    id="key-input"
+                    type="text"
+                    placeholder="ENTER YOUR ACCESS KEY"
+                    autocomplete="off"
+                    autocapitalize="characters"
+                    spellcheck="false"
+                    required
+                >
+
+                <button
+                    class="paste-btn"
+                    id="paste-btn"
+                    type="button"
+                >PASTE</button>
             </div>
         </div>
 
-        <button class="unlock-btn" id="unlock-btn">UNLOCK</button>
-        <div class="loading-text" id="loading-text">Verifying & Logging in...</div>
+        <button class="unlock-btn" id="unlock-btn" type="submit">
+            UNLOCK
+        </button>
 
-        <div class="footer-text">
-            no key? contact your seller.<br>
-            your time starts when you connect.
-        </div>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+    </form>
+
+    <footer class="footer">
+        No key? Contact your seller.<br>
+        Your time starts when you connect.
+    </footer>
+
+    <div class="note">
+        MDUY MODZ ACCESS SYSTEM<br>
+        Authentication is handled by the official service.
     </div>
 
-    <script>
-        const inputWrapper = document.getElementById('input-wrapper');
-        const keyInput = document.getElementById('key-input');
-        const pasteBtn = document.getElementById('paste-btn');
-        const unlockBtn = document.getElementById('unlock-btn');
-        const overlay = document.getElementById('mduy-overlay');
-        const trollmodzContainer = document.getElementById('trollmodz-container');
-        const iframe = document.getElementById('trollmodz-iframe');
-        const loadingText = document.getElementById('loading-text');
+</main>
 
-        pasteBtn.onclick = async () => {
-            try { keyInput.value = await navigator.clipboard.readText(); } catch(e) {}
-        };
+<script>
+(function () {
+    "use strict";
 
-        unlockBtn.onclick = () => {
-            const userKey = keyInput.value.trim().toUpperCase();
-            if (!userKey) return;
+    const OFFICIAL_URL = "https://client.trollmodz.store/";
 
-            unlockBtn.disabled = true;
-            loadingText.style.display = 'block';
+    const form = document.getElementById("access-form");
+    const keyInput = document.getElementById("key-input");
+    const pasteBtn = document.getElementById("paste-btn");
+    const unlockBtn = document.getElementById("unlock-btn");
+    const statusBox = document.getElementById("status");
 
-            // ========================================================
-            // KỸ THUẬT: TỰ ĐỘNG ĐIỀN KEY VÀO TRONG IFRAME
-            // ========================================================
-            
-            // Mẹo nhỏ: Load trang Trollmodz vào iframe
-            // Thử truyền key qua URL hash (một số web tự nhận key qua URL)
-            // Nếu không được, ta sẽ dùng JS để can thiệp vào iframe (nếu web cho phép)
-            
-            // Gán link Trollmodz (có thể thêm ?key=... hoặc #key=... nếu web hỗ trợ)
-            iframe.src = "https://client.trollmodz.store/";
-            
-            trollmodzContainer.style.display = 'block';
+    function setStatus(message, isError) {
+        statusBox.textContent = message;
+        statusBox.className = isError
+            ? "status error"
+            : "status";
+    }
 
-            // Đợi 3 giây để iframe tải xong form
-            setTimeout(() => {
-                try {
-                    // CỐ GẮNG CAN THIỆP VÀO IFRAME (Chỉ hoạt động nếu cùng domain hoặc web ko chặn)
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    
-                    // Tìm ô input và nút button của Trollmodz
-                    let trollInput = iframeDoc.querySelector('input[type="text"]');
-                    let trollBtn = Array.from(iframeDoc.querySelectorAll('button')).find(b => b.innerText.includes('UNLOCK') || b.innerText.includes('LOGIN'));
+    pasteBtn.addEventListener("click", async function () {
+        try {
+            const text = await navigator.clipboard.readText();
 
-                    if (trollInput && trollBtn) {
-                        // Điền key
-                        trollInput.value = userKey;
-                        trollInput.dispatchEvent(new Event('input', { bubbles: true }));
-                        
-                        // Bấm nút
-                        setTimeout(() => { trollBtn.click(); }, 500);
-                    }
-                } catch (error) {
-                    console.log("Lỗi bảo mật: Trình duyệt không cho phép can thiệp vào web khác (CORS).");
-                }
+            if (!text.trim()) {
+                setStatus("CLIPBOARD IS EMPTY", true);
+                return;
+            }
 
-                // Dù thế nào, cũng ẩn lớp vỏ MDUY đi sau 4 giây
-                setTimeout(() => {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => { overlay.style.display = 'none'; loadingText.style.display = 'none'; }, 400);
-                }, 4000);
+            keyInput.value = text.trim();
+            setStatus("KEY PASTED SUCCESSFULLY", false);
+        } catch (error) {
+            setStatus(
+                "PASTE BLOCKED. PLEASE PASTE YOUR KEY MANUALLY.",
+                true
+            );
+            keyInput.focus();
+        }
+    });
 
-            }, 3000);
-        };
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        keyInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') unlockBtn.click();
-        });
-    </script>
+        const key = keyInput.value.trim();
+
+        if (!key) {
+            setStatus("PLEASE ENTER YOUR ACCESS KEY", true);
+            keyInput.focus();
+            return;
+        }
+
+        setStatus("OPENING OFFICIAL TROLLMODZ WEBSITE...", false);
+        unlockBtn.disabled = true;
+        unlockBtn.textContent = "OPENING...";
+
+        // Opening the official site does not authenticate the key.
+        // Automatic login requires an officially supported integration.
+        window.location.href = OFFICIAL_URL;
+    });
+
+    keyInput.addEventListener("input", function () {
+        if (statusBox.textContent) {
+            setStatus("", false);
+        }
+
+        unlockBtn.disabled = false;
+        unlockBtn.textContent = "UNLOCK";
+    });
+})();
+</script>
+
 </body>
 </html>
