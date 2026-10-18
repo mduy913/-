@@ -26,27 +26,29 @@
 }
 
 body {
-    background: var(--bg);
-    color: white;
     min-height: 100vh;
     min-height: 100dvh;
+    background: var(--bg);
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
     overflow-x: hidden;
+    position: relative;
 }
 
 body::before {
     content: "";
     position: fixed;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(0,229,255,.07);
+    filter: blur(100px);
     top: 15%;
     left: 50%;
     transform: translateX(-50%);
-    background: #00e5ff12;
-    filter: blur(90px);
     pointer-events: none;
 }
 
@@ -55,22 +57,22 @@ body::before {
     max-width: 400px;
     position: relative;
     z-index: 1;
-    animation: appear .5s ease;
+    animation: appear .6s ease both;
 }
 
 @keyframes appear {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .lang-btn {
     position: absolute;
-    top: 0;
     right: 0;
+    top: 0;
     padding: 8px 12px;
     color: var(--sub);
     background: #ffffff08;
-    border: 1px solid #ffffff20;
+    border: 1px solid #ffffff1a;
     border-radius: 4px;
     font-size: 12px;
 }
@@ -85,22 +87,22 @@ body::before {
     font-weight: 700;
     font-style: italic;
     line-height: 1;
-    text-shadow: 0 0 25px #00e5ff70;
+    text-shadow: 0 0 25px #00e5ff66;
 }
 
 .logo-sub {
-    display: block;
-    margin-top: 8px;
+    display: inline-block;
     color: var(--cyan);
     font-size: 22px;
     letter-spacing: 7px;
+    margin-top: 8px;
 }
 
 .slogan {
+    text-align: center;
     color: var(--sub);
     font-size: 10px;
     letter-spacing: 1.5px;
-    text-align: center;
     margin-bottom: 42px;
 }
 
@@ -109,7 +111,9 @@ body::before {
 }
 
 .input-label {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: var(--cyan);
     font-size: 12px;
     font-weight: 700;
@@ -119,53 +123,51 @@ body::before {
 
 .input-label::before {
     content: "";
-    display: inline-block;
     width: 7px;
     height: 7px;
     background: var(--cyan);
     box-shadow: 0 0 8px var(--cyan);
-    margin-right: 8px;
 }
 
 .key-wrapper {
     display: flex;
-    width: 100%;
     background: #11131a;
     border: 1px solid #00e5ff88;
     border-radius: 5px;
     overflow: hidden;
+    transition: .2s;
 }
 
 .key-wrapper:focus-within {
     border-color: var(--cyan);
-    box-shadow: 0 0 15px #00e5ff20;
+    box-shadow: 0 0 18px #00e5ff20;
 }
 
 .key-wrapper input {
-    flex: 1;
+    width: 100%;
     min-width: 0;
-    width: 0;
-    padding: 18px 12px;
     background: transparent;
-    border: 0;
+    border: none;
     outline: none;
     color: white;
+    padding: 18px 12px;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .key-wrapper input::placeholder {
-    color: #596174;
-    font-size: 11px;
+    color: #555d70;
+    font-size: 12px;
 }
 
 .paste-btn {
     flex-shrink: 0;
-    padding: 0 16px;
-    color: white;
+    padding: 0 17px;
     background: #1a1c23;
-    border: 0;
+    color: white;
+    border: none;
     border-left: 1px solid #333;
     font-size: 12px;
     font-weight: 700;
@@ -173,36 +175,35 @@ body::before {
 }
 
 .unlock-btn {
-    display: block;
     width: 100%;
     padding: 18px;
-    margin-bottom: 16px;
     background: var(--cyan);
     color: #000;
-    border: 0;
+    border: none;
     border-radius: 4px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
-    clip-path: polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%);
-    -webkit-appearance: none;
-    appearance: none;
+    transition: .2s;
+    margin-bottom: 18px;
 }
 
 .unlock-btn:active {
-    opacity: .8;
+    transform: scale(.98);
 }
 
 .unlock-btn:disabled {
     opacity: .6;
+    cursor: wait;
 }
 
 .status {
-    min-height: 20px;
-    margin-bottom: 16px;
-    color: var(--cyan);
-    font-size: 12px;
+    min-height: 22px;
     text-align: center;
+    font-size: 12px;
+    color: var(--cyan);
+    margin-bottom: 18px;
     overflow-wrap: anywhere;
 }
 
@@ -211,26 +212,33 @@ body::before {
 }
 
 .footer {
+    text-align: center;
     color: var(--sub);
     font-size: 12px;
     line-height: 2;
-    text-align: center;
+}
+
+.footer a {
+    color: var(--cyan);
+    text-decoration: none;
 }
 
 .note {
     margin-top: 24px;
     padding: 12px;
+    background: #ffffff05;
+    border: 1px solid #ffffff10;
+    border-radius: 4px;
     color: #737c90;
     font-size: 10px;
     line-height: 1.8;
     text-align: center;
-    border: 1px solid #ffffff12;
-    border-radius: 4px;
 }
 
 @media (max-height: 600px) {
     body { align-items: flex-start; }
-    .container { margin: 30px 0; }
+    .container { margin: 35px 0; }
+    .logo-container { margin-bottom: 18px; }
     .slogan { margin-bottom: 24px; }
 }
 </style>
@@ -241,12 +249,12 @@ body::before {
 
     <button class="lang-btn" type="button">🌐 EN</button>
 
-    <header class="logo-container">
+    <div class="logo-container">
         <div class="logo-text">
             MDUY
-            <span class="logo-sub">MODZ</span>
+            <div class="logo-sub">MODZ</div>
         </div>
-    </header>
+    </div>
 
     <div class="slogan">
         NO ACCOUNT. NO PASSWORD. JUST YOUR KEY.
@@ -260,9 +268,9 @@ body::before {
 
             <div class="key-wrapper">
                 <input
-                    id="key-input"
                     type="text"
-                    placeholder="ENTER YOUR ACCESS KEY"
+                    id="key-input"
+                    placeholder="ENTER YOUR KEY"
                     autocomplete="off"
                     autocapitalize="characters"
                     spellcheck="false"
@@ -284,87 +292,76 @@ body::before {
         <div class="status" id="status" role="status" aria-live="polite"></div>
     </form>
 
-    <footer class="footer">
+    <div class="footer">
         No key? Contact your seller.<br>
         Your time starts when you connect.
-    </footer>
+    </div>
 
     <div class="note">
-        MDUY MODZ ACCESS SYSTEM<br>
-        Authentication is handled by the official service.
+        SECURE ACCESS SYSTEM<br>
+        Key verification is handled by the official Trollmodz website.
     </div>
 
 </main>
 
 <script>
-(function () {
-    "use strict";
+"use strict";
 
-    const OFFICIAL_URL = "https://client.trollmodz.store/";
+const OFFICIAL_URL = "https://client.trollmodz.store/";
 
-    const form = document.getElementById("access-form");
-    const keyInput = document.getElementById("key-input");
-    const pasteBtn = document.getElementById("paste-btn");
-    const unlockBtn = document.getElementById("unlock-btn");
-    const statusBox = document.getElementById("status");
+const form = document.getElementById("access-form");
+const keyInput = document.getElementById("key-input");
+const pasteBtn = document.getElementById("paste-btn");
+const unlockBtn = document.getElementById("unlock-btn");
+const statusBox = document.getElementById("status");
 
-    function setStatus(message, isError) {
-        statusBox.textContent = message;
-        statusBox.className = isError
-            ? "status error"
-            : "status";
+function setStatus(message, type = "") {
+    statusBox.textContent = message;
+    statusBox.className = "status" + (type ? " " + type : "");
+}
+
+pasteBtn.addEventListener("click", async () => {
+    try {
+        if (!navigator.clipboard || !navigator.clipboard.readText) {
+            throw new Error("Clipboard unavailable");
+        }
+
+        const value = await navigator.clipboard.readText();
+
+        if (value) {
+            keyInput.value = value.trim();
+            setStatus("KEY PASTED");
+        } else {
+            setStatus("CLIPBOARD IS EMPTY", "error");
+        }
+    } catch {
+        setStatus(
+            "PASTE IS UNAVAILABLE. PLEASE PASTE YOUR KEY MANUALLY.",
+            "error"
+        );
+        keyInput.focus();
+    }
+});
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const key = keyInput.value.trim();
+
+    if (!key) {
+        setStatus("PLEASE ENTER YOUR ACCESS KEY", "error");
+        keyInput.focus();
+        return;
     }
 
-    pasteBtn.addEventListener("click", async function () {
-        try {
-            const text = await navigator.clipboard.readText();
+    unlockBtn.disabled = true;
+    unlockBtn.textContent = "OPENING...";
+    setStatus("OPENING OFFICIAL TROLLMODZ LOGIN...");
 
-            if (!text.trim()) {
-                setStatus("CLIPBOARD IS EMPTY", true);
-                return;
-            }
-
-            keyInput.value = text.trim();
-            setStatus("KEY PASTED SUCCESSFULLY", false);
-        } catch (error) {
-            setStatus(
-                "PASTE BLOCKED. PLEASE PASTE YOUR KEY MANUALLY.",
-                true
-            );
-            keyInput.focus();
-        }
-    });
-
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const key = keyInput.value.trim();
-
-        if (!key) {
-            setStatus("PLEASE ENTER YOUR ACCESS KEY", true);
-            keyInput.focus();
-            return;
-        }
-
-        setStatus("OPENING OFFICIAL TROLLMODZ WEBSITE...", false);
-        unlockBtn.disabled = true;
-        unlockBtn.textContent = "OPENING...";
-
-        // Opening the official site does not authenticate the key.
-        // Automatic login requires an officially supported integration.
-        window.location.href = OFFICIAL_URL;
-    });
-
-    keyInput.addEventListener("input", function () {
-        if (statusBox.textContent) {
-            setStatus("", false);
-        }
-
-        unlockBtn.disabled = false;
-        unlockBtn.textContent = "UNLOCK";
-    });
-})();
+    // Open the official website without pretending the key
+    // has already been verified.
+    window.location.assign(OFFICIAL_URL);
+});
 </script>
-
 </body>
 </html>
