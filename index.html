@@ -14,34 +14,21 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Chakra Petch', sans-serif; }
     body { background-color: var(--bg); color: #fff; height: 100vh; overflow: hidden; }
 
-    /* ================= WEB THẬT (BÊN DƯỚI) ================= */
+    /* Khung chứa web Trollmodz (Sau khi xác thực) */
     #real-web-container {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        z-index: 1;
-        display: none; /* Ẩn lúc đầu */
-        background: #000;
+        position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: 1; display: none; background: #000;
     }
     #real-web-container iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
+        width: 100%; height: 100%; border: none;
     }
 
-    /* ================= WEB FAKE (LỚP VỎ ĐÈ LÊN) ================= */
+    /* Lớp vỏ Fake */
     #overlay {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background-color: var(--bg);
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        transition: opacity 0.4s ease;
+        position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: var(--bg); z-index: 10;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 20px; transition: opacity 0.4s ease;
     }
 
     .lang-btn {
@@ -50,95 +37,45 @@
         color: var(--text-sub); padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;
     }
 
-    .logo-container {
-        margin-bottom: 40px;
-        text-align: center;
-    }
+    .logo-container { margin-bottom: 40px; text-align: center; }
+    .logo-text { font-size: 48px; font-weight: 700; font-style: italic; color: #fff; text-shadow: 0 0 20px var(--cyan); line-height: 1; margin-bottom: 5px; }
+    .logo-sub { font-size: 20px; color: var(--cyan); font-style: normal; text-shadow: none; letter-spacing: 4px; }
+    .slogan { font-size: 11px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 60px; text-align: center; }
     
-    /* Logo chữ MDUY */
-    .logo-text {
-        font-size: 48px; font-weight: 700; font-style: italic;
-        color: #fff; text-shadow: 0 0 20px var(--cyan); line-height: 1;
-        margin-bottom: 5px;
-    }
-    .logo-sub { 
-        font-size: 20px; color: var(--cyan); font-style: normal; 
-        text-shadow: none; letter-spacing: 4px;
-    }
-
-    .slogan {
-        font-size: 11px; color: var(--text-sub); letter-spacing: 2px; text-transform: uppercase;
-        margin-bottom: 60px; text-align: center;
-    }
-
-    .input-group {
-        width: 100%; max-width: 400px;
-        margin-bottom: 20px;
-    }
-    .input-label {
-        font-size: 12px; font-weight: 600; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px;
-        margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-    }
-    /* Ô vuông nhỏ trước chữ ACCESS KEY */
-    .input-label::before { 
-        content: ''; display: inline-block; width: 8px; height: 8px; background: var(--cyan); 
-    }
+    .input-group { width: 100%; max-width: 400px; margin-bottom: 20px; }
+    .input-label { font-size: 12px; font-weight: 600; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .input-label::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--cyan); }
 
     .key-input-wrapper {
-        display: flex;
-        background: #11131a;
-        border: 1px solid var(--cyan);
-        border-radius: 4px;
-        overflow: hidden;
-        box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+        display: flex; background: #11131a; border: 1px solid var(--cyan); border-radius: 4px; overflow: hidden; box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
     }
     .key-input-wrapper input {
-        flex: 1; background: transparent; border: none; color: #fff;
-        padding: 18px 15px; font-size: 16px; font-weight: 600; letter-spacing: 2px; outline: none;
+        flex: 1; background: transparent; border: none; color: #fff; padding: 18px 15px; font-size: 16px; font-weight: 600; letter-spacing: 2px; outline: none; text-transform: uppercase;
     }
-    .key-input-wrapper input::placeholder { color: #333; }
-    
-    .paste-btn {
-        background: #1a1c23; border: none; border-left: 1px solid #333;
-        color: #fff; padding: 0 25px; font-size: 13px; font-weight: 600; cursor: pointer;
-    }
+    .paste-btn { background: #1a1c23; border: none; border-left: 1px solid #333; color: #fff; padding: 0 25px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
     .unlock-btn {
-        width: 100%; max-width: 400px;
-        background: var(--cyan); color: #000;
-        border: none; padding: 20px; border-radius: 4px;
-        font-size: 22px; font-weight: 700; text-transform: uppercase;
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
-        cursor: pointer; margin-bottom: 25px;
-        box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-        transition: 0.2s;
+        width: 100%; max-width: 400px; background: var(--cyan); color: #000; border: none; padding: 20px; border-radius: 4px; font-size: 22px; font-weight: 700; text-transform: uppercase; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); cursor: pointer; margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); transition: 0.2s;
     }
     .unlock-btn:active { transform: scale(0.97); }
 
-    .footer-text {
-        font-size: 14px; color: var(--text-sub); text-align: center; line-height: 1.8;
-    }
+    .footer-text { font-size: 14px; color: var(--text-sub); text-align: center; line-height: 1.8; }
     
-    /* Hiệu ứng rung khi nhập sai key */
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-8px); }
-        50% { transform: translateX(8px); }
-        75% { transform: translateX(-8px); }
-        100% { transform: translateX(0); }
-    }
+    @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-8px); } 50% { transform: translateX(8px); } 75% { transform: translateX(-8px); } 100% { transform: translateX(0); } }
     .error-shake { animation: shake 0.4s; border-color: #ff4b4b !important; box-shadow: 0 0 15px rgba(255, 75, 75, 0.4) !important; }
+    
+    .loading-text { display: none; color: var(--cyan); font-size: 12px; margin-top: 10px; text-align: center; }
 </style>
 </head>
 <body>
 
-    <!-- ================= WEB THẬT (TROLLMODZ) ================= -->
+    <!-- KHUNG CHỨA WEB THẬT (Trollmodz) -->
     <div id="real-web-container">
-        <!-- Nhúng link web thật vào đây -->
-        <iframe id="real-web" src="https://client.trollmodz.store/" allow="fullscreen"></iframe>
+        <!-- Sẽ được nhúng link Proxy từ Server trả về -->
+        <iframe id="real-web" src="" allow="fullscreen"></iframe>
     </div>
 
-    <!-- ================= WEB FAKE (LỚP VỎ ĐÈ LÊN) ================= -->
+    <!-- LỚP VỎ FAKE -->
     <div id="overlay">
         <button class="lang-btn">🌐 EN</button>
 
@@ -151,12 +88,13 @@
         <div class="input-group">
             <div class="input-label">ACCESS KEY</div>
             <div class="key-input-wrapper" id="input-wrapper">
-                <input type="text" id="key-input" placeholder="MDUY-XXXX-XXXX-XXXX">
+                <input type="text" id="key-input" placeholder="TRLL-XXXX-XXXX-XXXX">
                 <button class="paste-btn" id="paste-btn">PASTE</button>
             </div>
         </div>
 
         <button class="unlock-btn" id="unlock-btn">UNLOCK</button>
+        <div class="loading-text" id="loading-text">Đang xác thực với Server...</div>
 
         <div class="footer-text">
             no key? contact your seller.<br>
@@ -171,49 +109,57 @@
         const unlockBtn = document.getElementById('unlock-btn');
         const overlay = document.getElementById('overlay');
         const realWebContainer = document.getElementById('real-web-container');
+        const realWebIframe = document.getElementById('real-web');
+        const loadingText = document.getElementById('loading-text');
 
-        // BẠN CÓ THỂ ĐỔI KEY MỞ KHÓA Ở ĐÂY
-        const VALID_KEY = "MDUY-KING-2026";
+        // ĐÂY LÀ LINK SERVER NODE.JS CỦA BẠN (Xem Phần 2 bên dưới)
+        // Nếu bạn chạy Node.js trên máy tính: http://localhost:3000
+        // Nếu bạn đưa lên host: https://proxy-mduy.com
+        const PROXY_SERVER_URL = "http://localhost:3000"; 
 
-        // Xử lý nút Paste (Dán)
         pasteBtn.onclick = async () => {
             try {
                 const text = await navigator.clipboard.readText();
                 keyInput.value = text;
-            } catch (err) {
-                alert('Trình duyệt không cho phép tự động dán. Vui lòng giữ và dán thủ công!');
+            } catch (err) { alert('Trình bị chặn tự động dán!'); }
+        };
+
+        unlockBtn.onclick = async () => {
+            const userKey = keyInput.value.trim().toUpperCase();
+            if (!userKey) return;
+
+            unlockBtn.disabled = true;
+            loadingText.style.display = 'block';
+
+            try {
+                // Gửi Key lên Server Proxy để xác thực
+                const response = await fetch(`${PROXY_SERVER_URL}/verify?key=${userKey}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // Nếu Server báo ĐÚNG -> Nhúng Iframe Proxy vào
+                    realWebIframe.src = `${PROXY_SERVER_URL}/proxy?key=${userKey}`;
+                    realWebContainer.style.display = 'block';
+                    
+                    // Ẩn lớp vỏ
+                    overlay.style.opacity = '0';
+                    setTimeout(() => { overlay.style.display = 'none'; }, 400);
+                } else {
+                    // Nếu SAI -> Rung lên báo lỗi
+                    inputWrapper.classList.add('error-shake');
+                    setTimeout(() => { inputWrapper.classList.remove('error-shake'); }, 400);
+                    keyInput.value = '';
+                }
+            } catch (error) {
+                alert('Không thể kết nối đến Server Proxy!');
+            } finally {
+                unlockBtn.disabled = false;
+                loadingText.style.display = 'none';
             }
         };
 
-        // Xử lý nút Unlock
-        unlockBtn.onclick = () => {
-            const enteredKey = keyInput.value.trim();
-
-            if (enteredKey === VALID_KEY) {
-                // Nếu ĐÚNG Key:
-                // 1. Hiển thị web thật
-                realWebContainer.style.display = 'block';
-                
-                // 2. Làm mờ và ẩn lớp vỏ Fake
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 400);
-            } else {
-                // Nếu SAI Key: Rung lên báo lỗi
-                inputWrapper.classList.add('error-shake');
-                setTimeout(() => {
-                    inputWrapper.classList.remove('error-shake');
-                }, 400);
-                keyInput.value = '';
-            }
-        };
-
-        // Bấm phím Enter để Unlock
         keyInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                unlockBtn.click();
-            }
+            if (e.key === 'Enter') unlockBtn.click();
         });
     </script>
 </body>
