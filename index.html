@@ -3,284 +3,723 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ultimate HTML Cloner V5</title>
+<title>MDUY MODZ</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+    :root {
+        --bg-color: #0a0b10;
+        --card-bg: #12141c;
+        --cyan: #00e5ff;
+        --cyan-dim: rgba(0, 229, 255, 0.2);
+        --text-main: #ffffff;
+        --text-sub: #8b92a5;
+        --red: #ff4b4b;
+        --font-main: 'Chakra Petch', sans-serif;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%); color: #fff; min-height: 100vh; padding: 14px; display: flex; flex-direction: column; align-items: center; }
-    .container { max-width: 700px; width: 100%; }
-    h1 { text-align: center; font-size: 22px; margin-bottom: 6px; background: linear-gradient(135deg, #00b4d8, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
-    .subtitle { text-align: center; font-size: 12px; color: #888; margin-bottom: 20px; }
-    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(0,180,216,0.3); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
-    .label { font-size: 11px; font-weight: 800; color: #00b4d8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-    input[type="text"] { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,180,216,0.3); border-radius: 10px; color: #fff; padding: 14px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 12px; }
-    input[type="text"]:focus { border-color: #00b4d8; box-shadow: 0 0 15px rgba(0,180,216,0.3); }
-    button.main-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00b4d8, #a855f7); border: none; border-radius: 12px; color: #fff; font-weight: 800; font-size: 14px; cursor: pointer; transition: 0.2s; }
-    button.main-btn:hover { transform: translateY(-2px); }
-    button.main-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .status { font-size: 12px; text-align: center; padding: 12px; color: #22c55e; min-height: 40px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-top: 12px; line-height: 1.6; }
-    .status.error { color: #ef4444; }
-    .status.loading { color: #f59e0b; }
-    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,180,216,0.2); border-top-color: #00b4d8; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .log { background: rgba(0,0,0,0.5); border-radius: 10px; padding: 12px; max-height: 250px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.6; margin-top: 12px; display: none; }
-    .log.show { display: block; }
-    .log-item { padding: 2px 0; }
-    .log-item.ok { color: #22c55e; }
-    .log-item.err { color: #ef4444; }
-    .log-item.info { color: #00b4d8; }
-    .log-item.warn { color: #f59e0b; }
-    .progress-bar { width: 100%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; margin-top: 12px; display: none; }
-    .progress-bar.show { display: block; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #00b4d8, #a855f7); width: 0%; transition: width 0.3s; }
+    
+    body {
+        font-family: var(--font-main);
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .app-container {
+        width: 100%;
+        max-width: 420px;
+        background-color: var(--bg-color);
+        position: relative;
+        padding-bottom: 70px; /* Space for bottom nav */
+        min-height: 100vh;
+    }
+
+    /* ================= HEADER ================= */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .header h1 {
+        font-size: 24px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .lang-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: var(--text-sub);
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-family: var(--font-main);
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* ================= PAGES ================= */
+    .page { display: none; padding: 15px; animation: fadeIn 0.3s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ================= HOME PAGE ================= */
+    .timer-container {
+        position: relative;
+        width: 260px;
+        height: 260px;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .timer-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+    .timer-circle-bg { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 6; }
+    .timer-circle-progress {
+        fill: none;
+        stroke: var(--cyan);
+        stroke-width: 6;
+        stroke-dasharray: 754; /* 2 * pi * 120 */
+        stroke-dashoffset: 188; /* 25% filled */
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 8px var(--cyan));
+    }
+    .brand-logo {
+        font-size: 36px;
+        font-weight: 700;
+        font-style: italic;
+        color: var(--text-main);
+        text-shadow: 0 0 10px var(--cyan);
+        z-index: 10;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .time-left {
+        font-size: 28px;
+        font-weight: 700;
+        z-index: 10;
+        margin-bottom: 2px;
+    }
+    .time-label {
+        font-size: 10px;
+        color: var(--text-sub);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        z-index: 10;
+    }
+
+    .key-box {
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 8px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .key-label {
+        font-size: 12px;
+        color: var(--text-sub);
+        letter-spacing: 1px;
+    }
+    .key-value {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+    .copy-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-sub);
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .stat-box {
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.05);
+        padding: 12px 10px;
+        border-radius: 8px;
+    }
+    .stat-box-label {
+        font-size: 10px;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+    .stat-box-value {
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .sub-btn {
+        width: 100%;
+        background: var(--cyan);
+        color: #000;
+        border: none;
+        padding: 18px;
+        border-radius: 8px;
+        font-family: var(--font-main);
+        font-size: 18px;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        position: relative;
+    }
+    .sub-btn span { text-align: left; }
+    .sub-btn small { display: block; font-size: 11px; font-weight: 500; text-transform: none; margin-top: 4px; color: rgba(0,0,0,0.7); }
+    .plus-icon {
+        background: rgba(0,0,0,0.1);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        font-size: 24px;
+    }
+
+    /* ================= FEATURES PAGE ================= */
+    .feature-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        position: relative;
+    }
+    .feature-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+    .feature-title-group { display: flex; align-items: center; gap: 10px; }
+    .feature-num { font-size: 12px; color: var(--text-sub); font-weight: 600; }
+    .feature-title { font-size: 16px; font-weight: 700; text-transform: uppercase; }
+    .badge-new {
+        background: rgba(255,255,255,0.1);
+        font-size: 9px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: var(--text-sub);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .feature-desc {
+        font-size: 13px;
+        color: var(--text-sub);
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+    .feature-sub-options {
+        border-top: 1px dashed rgba(255,255,255,0.1);
+        padding-top: 12px;
+        margin-top: 12px;
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 26px;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #1a1c23;
+        transition: .4s;
+        border-radius: 34px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: #444;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .slider {
+        background-color: var(--cyan);
+    }
+    input:checked + .slider:before {
+        transform: translateX(24px);
+        background-color: #000;
+    }
+
+    /* Marker Styles */
+    .style-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin-top: 10px;
+    }
+    .style-btn {
+        background: #1a1c23;
+        border: 1px solid rgba(255,255,255,0.05);
+        color: var(--text-sub);
+        padding: 8px 0;
+        border-radius: 4px;
+        font-family: var(--font-main);
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+    .style-btn.active {
+        background: #0e3b45;
+        border-color: var(--cyan);
+        color: var(--cyan);
+    }
+
+    /* Slider */
+    .range-slider {
+        width: 100%;
+        -webkit-appearance: none;
+        height: 4px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 2px;
+        outline: none;
+        margin: 15px 0;
+    }
+    .range-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--cyan);
+        cursor: pointer;
+        box-shadow: 0 0 10px var(--cyan);
+    }
+    .angle-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--cyan);
+        text-align: right;
+    }
+
+    /* ================= MANAGE PAGE ================= */
+    .device-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+    .device-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 15px; height: 15px;
+        background: var(--bg-color);
+        clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    }
+    .device-title { font-size: 20px; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+    .device-os { font-size: 13px; color: var(--text-sub); margin-bottom: 15px; }
+    .device-id { font-size: 13px; color: var(--text-sub); margin-bottom: 15px; font-family: monospace; }
+    .reset-btn {
+        width: 100%;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        color: var(--text-main);
+        padding: 12px;
+        border-radius: 6px;
+        font-family: var(--font-main);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .list-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 8px;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 16px;
+        font-size: 11px;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .list-item {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        cursor: pointer;
+    }
+    .list-item:last-child { border-bottom: none; }
+    .list-icon {
+        width: 40px; height: 40px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        margin-right: 15px;
+        font-size: 18px;
+    }
+    .list-content { flex: 1; }
+    .list-title { font-size: 15px; font-weight: 700; text-transform: uppercase; }
+    .list-sub { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+    .arrow { color: var(--text-sub); font-size: 18px; }
+
+    .logout-btn {
+        width: 100%;
+        background: rgba(255, 75, 75, 0.1);
+        border: 1px solid rgba(255, 75, 75, 0.2);
+        color: var(--red);
+        padding: 16px;
+        border-radius: 8px;
+        font-family: var(--font-main);
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    /* ================= BOTTOM NAV ================= */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 420px;
+        background: rgba(10, 11, 16, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0 20px 0;
+        z-index: 100;
+    }
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        color: var(--text-sub);
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .nav-icon { font-size: 20px; filter: grayscale(1); transition: 0.3s; }
+    .nav-item.active { color: var(--cyan); }
+    .nav-item.active .nav-icon { filter: grayscale(0) drop-shadow(0 0 5px var(--cyan)); }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🕵️ HTML CLONER V5</h1>
-    <div class="subtitle">Tải 100% CSS/JS/Ảnh (Cố gắng tối đa)</div>
-
-    <div class="card">
-        <div class="label">📎 NHẬP URL CẦN CLONE</div>
-        <input type="text" id="url-input" placeholder="https://example.com" />
-        <button class="main-btn" id="clone-btn">🚀 BẮT ĐẦU CLONE</button>
+<div class="app-container">
+    <!-- HEADER -->
+    <div class="header">
+        <h1 id="page-title">HOME</h1>
+        <button class="lang-btn">🌐 EN</button>
     </div>
 
-    <div class="status" id="status">Sẵn sàng</div>
-    <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="log" id="log"></div>
+    <!-- ================= PAGE 1: HOME ================= -->
+    <div class="page active" id="page-home">
+        <div class="timer-container">
+            <svg class="timer-svg" viewBox="0 0 260 260">
+                <circle class="timer-circle-bg" cx="130" cy="130" r="120"></circle>
+                <circle class="timer-circle-progress" cx="130" cy="130" r="120"></circle>
+            </svg>
+            <div class="brand-logo">MDUY<br><span style="font-size:16px; font-style:normal; color:var(--cyan); text-shadow:none;">MODZ</span></div>
+            <div class="time-left">11D 0H</div>
+            <div class="time-label">TIME LEFT</div>
+        </div>
+
+        <div class="key-box">
+            <div>
+                <div class="key-label">KEY</div>
+                <div class="key-value">MDUY-E808-44AF-B940</div>
+            </div>
+            <button class="copy-btn" onclick="alert('Đã copy key!')">📄 COPY</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-box-label">Activated</div>
+                <div class="stat-box-value">25 Sep 2026</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-label">Expires</div>
+                <div class="stat-box-value">29 Oct 2026</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-label">Device</div>
+                <div class="stat-box-value">iPhone Xs Max</div>
+            </div>
+        </div>
+
+        <button class="sub-btn">
+            <span>
+                ADD SUBSCRIPTION
+                <small>opens your vpn app with your key ready</small>
+            </span>
+            <div class="plus-icon">+</div>
+        </button>
+    </div>
+
+    <!-- ================= PAGE 2: FEATURES ================= -->
+    <div class="page" id="page-features">
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-sub); margin-bottom:15px; padding:0 5px;">
+            <span>changes apply from your next match</span>
+            <span style="color:var(--cyan); font-weight:bold;">2/5</span>
+        </div>
+
+        <!-- Feature 1 -->
+        <div class="feature-card">
+            <div class="feature-header">
+                <div class="feature-title-group">
+                    <span class="feature-num">01</span>
+                    <span class="feature-title">MARKER</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="feature-desc">marks every enemy on your screen.</div>
+            
+            <div class="feature-sub-options">
+                <div style="font-size:10px; color:var(--text-sub); margin-bottom:10px;">🔒 TURN ON TO CHANGE</div>
+                <div style="font-size:10px; color:var(--text-sub); margin-bottom:5px;">MARK STYLE</div>
+                <div class="style-grid">
+                    <button class="style-btn">PHANTOM</button>
+                    <button class="style-btn">DREAM</button>
+                    <button class="style-btn">ICE WALL</button>
+                    <button class="style-btn">MOCO</button>
+                    <button class="style-btn">CLU</button>
+                    <button class="style-btn">SHIROU</button>
+                    <button class="style-btn active">IRIS</button>
+                    <button class="style-btn">DREKI</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+            <div class="feature-header">
+                <div class="feature-title-group">
+                    <span class="feature-num">02</span>
+                    <span class="feature-title">AIMPOINT</span>
+                    <span class="badge-new">NEW</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="feature-desc">moves your aim from the chest to the neck, so body shots land as headshots.</div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+            <div class="feature-header">
+                <div class="feature-title-group">
+                    <span class="feature-num">03</span>
+                    <span class="feature-title">AIM LAG</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="feature-desc">freezes the enemy for a moment while you fire or scope, so they're easier to hit.</div>
+            
+            <div class="feature-sub-options">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:12px;">when firing</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <span style="font-size:12px;">when scoping</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+            <div class="feature-header">
+                <div class="feature-title-group">
+                    <span class="feature-num">04</span>
+                    <span class="feature-title">GLOO WALL ROTATION</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="feature-desc">turns your gloo wall to the angle you set.</div>
+            
+            <div class="feature-sub-options">
+                <div style="font-size:10px; color:var(--text-sub); margin-bottom:10px;">🔒 TURN ON TO CHANGE</div>
+                <div style="font-size:10px; color:var(--text-sub); margin-bottom:5px;">WALL ANGLE</div>
+                <div class="angle-value">180°</div>
+                <input type="range" class="range-slider" min="-90" max="180" value="180">
+            </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+            <div class="feature-header">
+                <div class="feature-title-group">
+                    <span class="feature-num">05</span>
+                    <span class="feature-title">FAST REVIVE</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="feature-desc">picks up a knocked teammate in about 0.1 s instead of 3 s.</div>
+        </div>
+    </div>
+
+    <!-- ================= PAGE 3: MANAGE ================= -->
+    <div class="page" id="page-manage">
+        <div class="device-card">
+            <div class="device-title">IPHONE XS MAX</div>
+            <div class="device-os">iOS</div>
+            <div class="device-id">vayj9roxso4ulqe6j</div>
+            <button class="reset-btn">RESET DEVICE</button>
+        </div>
+
+        <div class="list-card">
+            <div class="list-header">
+                <span>UPDATE NOTES</span>
+                <span>ALL UPDATES ></span>
+            </div>
+            <div class="list-item" style="display:block;">
+                <div style="font-size:16px; font-weight:700; text-transform:uppercase; margin-bottom:8px;">V1.7 AIM LAG IS BACK, NEXT TO AIMPOINT</div>
+                <div style="font-size:13px; color:var(--text-sub); line-height:1.5;">aim lag is back, sitting under aimpoint. run it with aimpoint or on its own. every feature now carries a short...</div>
+            </div>
+        </div>
+
+        <div class="list-card">
+            <div class="list-item">
+                <div class="list-icon">▶</div>
+                <div class="list-content">
+                    <div class="list-title">SETUP GUIDE</div>
+                    <div class="list-sub">get the app and connect</div>
+                </div>
+                <div class="arrow">></div>
+            </div>
+        </div>
+
+        <div style="font-size:11px; color:var(--text-sub); margin: 20px 0 10px 10px; letter-spacing:1px;">COMMUNITY</div>
+
+        <div class="list-card">
+            <div class="list-item">
+                <div class="list-icon" style="background:#25D366; color:#fff; font-weight:bold; border-radius:4px;">W</div>
+                <div class="list-content">
+                    <div class="list-title">WHATSAPP</div>
+                </div>
+                <div class="arrow">↗</div>
+            </div>
+        </div>
+
+        <button class="logout-btn">
+            <span>←</span> LOG OUT
+        </button>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('home', this)">
+            <span class="nav-icon">🏠</span>
+            <span>HOME</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('features', this)">
+            <span class="nav-icon">🔘</span>
+            <span>FEATURES</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('manage', this)">
+            <span class="nav-icon">☰</span>
+            <span>MANAGE</span>
+        </div>
+    </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-(function() {
-    'use strict';
+    function switchTab(tabId, navElement) {
+        // 1. Ẩn tất cả các trang
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        
+        // 2. Hiện trang được chọn
+        document.getElementById('page-' + tabId).classList.add('active');
 
-    var $ = function(id) { return document.getElementById(id); };
-    var zip = null;
-    var baseHost = '';
+        // 3. Cập nhật tiêu đề trên cùng
+        document.getElementById('page-title').innerText = tabId.toUpperCase();
 
-    function setStatus(text, type) {
-        var el = $('status');
-        el.innerHTML = type === 'loading' ? '<span class="spinner"></span>' + text : text;
-        el.className = 'status' + (type ? ' ' + type : '');
+        // 4. Cập nhật trạng thái Active của thanh điều hướng
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        navElement.classList.add('active');
     }
 
-    function addLog(text, type) {
-        var log = $('log');
-        log.classList.add('show');
-        var item = document.createElement('div');
-        item.className = 'log-item ' + (type || 'info');
-        item.textContent = text;
-        log.appendChild(item);
-        log.scrollTop = log.scrollHeight;
-    }
-
-    function setProgress(p) {
-        $('progress-bar').classList.add('show');
-        $('progress-fill').style.width = p + '%';
-    }
-
-    async function fetchWithTimeout(url, options = {}, timeout = 8000) {
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), timeout);
-        try {
-            const response = await fetch(url, { ...options, signal: controller.signal });
-            clearTimeout(id);
-            return response;
-        } catch (error) {
-            clearTimeout(id);
-            throw error;
-        }
-    }
-
-    async function getRenderedHtml(url) {
-        addLog('📡 Đang Render JS qua Microlink...', 'info');
-        var api = 'https://api.microlink.io/?url=' + encodeURIComponent(url) + '&meta=false&data.html.selector=html&data.html.type=text';
-        try {
-            var res = await fetch(api);
-            var json = await res.json();
-            if (json.status === 'success' && json.data && json.data.html) {
-                return json.data.html;
-            }
-        } catch (e) { addLog('Microlink lỗi: ' + e.message, 'warn'); }
-        return null;
-    }
-
-    // Danh sách Proxy mạnh (Tải file text)
-    async function fetchTextResource(url) {
-        var proxies = [
-            'https://thingproxy.freeboard.io/fetch/' + url,
-            'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
-            'https://corsproxy.io/?' + encodeURIComponent(url),
-            'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
-            'https://cors.eu.org/' + url
-        ];
-        for (var i = 0; i < proxies.length; i++) {
-            try {
-                let res = await fetchWithTimeout(proxies[i], {}, 6000);
-                if (res.ok) {
-                    let text = await res.text();
-                    if (text && text.length > 10) return text;
-                }
-            } catch (e) {}
-        }
-        return null;
-    }
-
-    $('clone-btn').onclick = async function() {
-        var url = $('url-input').value.trim();
-        if (!url) return setStatus('❌ Chưa nhập URL!', 'error');
-        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-
-        $('clone-btn').disabled = true;
-        $('log').innerHTML = '';
-        setStatus('⏳ Đang xử lý...', 'loading');
-        setProgress(5);
-
-        try {
-            var urlObj = new URL(url);
-            baseHost = urlObj.hostname;
-
-            var html = await getRenderedHtml(url);
-            if (!html) throw new Error('Không thể Render HTML.');
-            addLog('✓ Lấy HTML thành công: ' + Math.round(html.length / 1024) + 'KB', 'ok');
-            setProgress(20);
-
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'text/html');
-            
-            zip = new JSZip();
-            var root = zip.folder(baseHost);
-            var assets = root.folder('assets');
-            var cssDir = assets.folder('css');
-            var jsDir = assets.folder('js');
-            var imgDir = assets.folder('img');
-
-            // Chuyển link tương đối thành tuyệt đối
-            doc.querySelectorAll('link[href], script[src], img[src]').forEach(el => {
-                ['href', 'src'].forEach(attr => {
-                    let val = el.getAttribute(attr);
-                    if (val && !val.startsWith('http') && !val.startsWith('data:') && !val.startsWith('blob:')) {
-                        try { el.setAttribute(attr, new URL(val, url).href); } catch(e){}
-                    }
-                });
-            });
-
-            // 1. TẢI CSS
-            var cssLinks = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
-            var cssMap = {};
-            var i = 0;
-            for (let el of cssLinks) {
-                let u = el.getAttribute('href');
-                addLog('⬇ Đang tải CSS: ' + u.substring(0, 40), 'info');
-                let text = await fetchTextResource(u);
-                if (text) {
-                    let name = 'style_' + (++i) + '.css';
-                    cssDir.file(name, text);
-                    cssMap[u] = 'assets/css/' + name;
-                    addLog('✓ CSS: ' + name, 'ok');
-                } else {
-                    addLog('✗ Lỗi CSS: ' + u.substring(0, 40), 'err');
-                }
-                setProgress(20 + (i / cssLinks.length) * 20);
-            }
-
-            // 2. TẢI JS
-            var jsScripts = Array.from(doc.querySelectorAll('script[src]'));
-            var jsMap = {};
-            var j = 0;
-            for (let el of jsScripts) {
-                let u = el.getAttribute('src');
-                addLog('⬇ Đang tải JS: ' + u.substring(0, 40), 'info');
-                let text = await fetchTextResource(u);
-                if (text) {
-                    let name = 'script_' + (++j) + '.js';
-                    jsDir.file(name, text);
-                    jsMap[u] = 'assets/js/' + name;
-                    addLog('✓ JS: ' + name, 'ok');
-                } else {
-                    addLog('✗ Lỗi JS: ' + u.substring(0, 40), 'err');
-                }
-                setProgress(40 + (j / jsScripts.length) * 20);
-            }
-
-            // 3. TẢI ẢNH
-            var imgs = Array.from(doc.querySelectorAll('img[src]'));
-            var imgMap = {};
-            var k = 0;
-            for (let el of imgs) {
-                let u = el.getAttribute('src');
-                if (u.startsWith('data:')) continue;
-                try {
-                    let res = await fetchWithTimeout('https://wsrv.nl/?url=' + encodeURIComponent(u) + '&output=webp', {}, 6000);
-                    if (res.ok) {
-                        let blob = await res.blob();
-                        let name = 'img_' + (++k) + '.webp';
-                        imgDir.file(name, blob);
-                        imgMap[u] = 'assets/img/' + name;
-                    }
-                } catch(e) {
-                    imgMap[u] = 'https://wsrv.nl/?url=' + encodeURIComponent(u);
-                }
-                setProgress(60 + (k / imgs.length) * 30);
-            }
-
-            // 4. CẬP NHẬT LẠI HTML
-            var newHtml = doc.documentElement.outerHTML;
-            
-            // Thay CSS
-            Object.keys(cssMap).forEach(oldUrl => {
-                newHtml = newHtml.split(oldUrl).join(cssMap[oldUrl]);
-            });
-            // Thay JS
-            Object.keys(jsMap).forEach(oldUrl => {
-                newHtml = newHtml.split(oldUrl).join(jsMap[oldUrl]);
-            });
-            // Thay Ảnh
-            Object.keys(imgMap).forEach(oldUrl => {
-                newHtml = newHtml.split(oldUrl).join(imgMap[oldUrl]);
-            });
-
-            // Nhúng CSS trực tiếp vào HEAD (nếu tải được)
-            let inlineCss = "";
-            for (let name in cssMap) {
-                let cssContent = await cssDir.file(cssMap[name]).async("string");
-                if (cssContent) inlineCss += `\n/* ${cssMap[name]} */\n${cssContent}\n`;
-            }
-            if (inlineCss) {
-                newHtml = newHtml.replace('</head>', `<style>\n${inlineCss}\n</style>\n</head>`);
-                addLog('✓ Đã nhúng CSS vào HTML', 'ok');
-            }
-
-            root.file('index.html', newHtml);
-            root.file('INFO.txt', `URL: ${url}\nTime: ${new Date().toLocaleString('vi-VN')}\nCSS: ${i} tải được, ${cssLinks.length-i} lỗi\nJS: ${j} tải được, ${jsScripts.length-j} lỗi\nẢnh: ${k} tải được`);
-
-            setProgress(95);
-            setStatus('⏳ Đang nén file ZIP...', 'loading');
-            var blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
-
-            var a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = baseHost.replace(/[^a-zA-Z0-9.-]/g, '_') + '_full.zip';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(a.href);
-
-            setProgress(100);
-            addLog('✅ Đã tải ZIP!', 'ok');
-            setStatus('✅ Nén thành công! (Xem chi tiết trong INFO.txt)', 'success');
-
-        } catch (err) {
-            addLog('❌ Lỗi: ' + err.message, 'err');
-            setStatus('❌ ' + err.message, 'error');
-            setProgress(0);
-        } finally {
-            $('clone-btn').disabled = false;
-        }
-    };
-})();
+    // Xử lý các nút chọn Style (ví dụ: IRIS)
+    document.querySelectorAll('.style-btn').forEach(btn => {
+        btn.onclick = function() {
+            // Xóa active của các nút khác trong cùng grid
+            this.parentElement.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+            // Thêm active cho nút được bấm
+            this.classList.add('active');
+        };
+    });
 </script>
+
 </body>
 </html>
